@@ -46,21 +46,12 @@ export default {
   },
   methods: {
     signIn() {
-      // 練習打登入的 API
-      // const api = `${process.env.APIPATH}/signin`;
-      // const api = "https://vue-course-api.hexschool.io/signin";
       const api = `http://localhost:3000/api/v1/login`;
-
+      // const api = `${process.env.THEOAPI}/api/v1/login`;
       // console.log(process.env.THEO);
       Vue.axios.post(api, this.user).then(response => {
         console.log(response.data);
       });
-      // Vue.axios.post(api, this.user).then(response => {
-      //   console.log(response.data);
-      //   if (response.data.success) {
-      //     this.$router.push("/Home"); //暫時導入到首頁，日後要改
-      //   }
-      // });
     }
   }
 };
