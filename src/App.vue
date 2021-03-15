@@ -10,8 +10,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
-body {
+<style>
+/* body {
   position: relative;
   box-sizing: border-box;
   background: #000;
@@ -20,5 +20,5 @@ body {
   color: #000;
   margin: 0;
   padding: 0;
-}
+} */
 </style>
