@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 body {
   position: relative;
   box-sizing: border-box;

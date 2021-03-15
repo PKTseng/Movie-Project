@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /*  首頁 logo */
 .logo {
   height: 70px;
@@ -64,5 +64,25 @@ export default {
 
 .navbar {
   z-index: 4;
+}
+
+.menuList {
+  font-size: 20px;
+  font-weight: 600;
+  .navListLink {
+    padding: 30px;
+    transition: 0.4s;
+    &:hover {
+      background: #c6c8ca;
+      span {
+        color: #000;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .navListLink {
+      padding: 15px;
+    }
+  }
 }
 </style>
