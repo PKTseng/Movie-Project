@@ -21,23 +21,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto menuList">
             <li class="nav-item active">
-              <a class="nav-link navListLink" href="./index.html">
+              <router-link class="nav-link navListLink" to="/Home">
                 <span class="itemLink"><i class="fas fa-home"></i></span>
                 <span class="ml-1 itemLink">首頁</span>
-              </a>
+              </router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link navListLink" href="./favorite.html">
+              <router-link class="nav-link navListLink" to="/Favorite">
                 <span><i class="far fa-heart"></i></span>
                 <span class="ml-1"> 我的最愛</span>
-              </a>
+              </router-link>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link navListLink" href="#">
                 <span><i class="fas fa-user-circle"></i></span>
                 <span class="ml-1">登入</span>
               </a>
-            </li> -->
+            </li>
           </ul>
         </div>
       </div>
