@@ -27,17 +27,17 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link navListLink" to="/Favorite">
+              <router-link class="nav-link navListLink" to="/favorite">
                 <span><i class="far fa-heart"></i></span>
                 <span class="ml-1"> 我的最愛</span>
               </router-link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link navListLink" href="#">
+            <!-- <li class="nav-item">
+              <router-link class="nav-link navListLink" to="/login">
                 <span><i class="fas fa-user-circle"></i></span>
-                <span class="ml-1">登入</span>
-              </a>
-            </li>
+                <span class="ml-1">後台管理</span>
+              </router-link>
+            </li> -->
           </ul>
         </div>
       </div>
