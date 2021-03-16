@@ -7,11 +7,19 @@
 <script>
 export default {
   name: "App"
+  // created() {
+  //   const api = `${process.env.APIPATH}/api/${process.env.COSTOMPATH}/products`;
+  //   // console.log(process.env.APIPATH);
+  //   // console.log(process.env.COSTOMPATH);
+  //   Vue.axios.get(api).then(response => {
+  //     console.log(response.data);
+  //   });
+  // }
 };
 </script>
 
 <style>
-/* body {
+body {
   position: relative;
   box-sizing: border-box;
   background: #000;
@@ -20,5 +28,5 @@ export default {
   color: #000;
   margin: 0;
   padding: 0;
-} */
+}
 </style>
