@@ -95,24 +95,13 @@
                     <div
                       class="card-footer d-flex justify-content-around border-white"
                     >
-                      <!-- <router-link
+                      <router-link
                         to="/movieInfo"
                         class="btn btn-outline-light btn-sm"
-                        @click="getProduct(id)"
-                        data-toggle="modal"
-                        data-target="#productModal"
+                        :info="products"
+                        @click="info"
                         >查看更多</router-link
-                      > -->
-                      <button
-                        class="btn btn-outline-danger btn-sm"
-                        @click="addCart(product_id, qty)"
                       >
-                        <i
-                          class="fas fa-spinner fa-spin"
-                          v-if="status.addLoading"
-                        ></i>
-                        測試查看
-                      </button>
                       <button class="btn btn-outline-danger btn-sm">
                         <i
                           class="fas fa-spinner fa-spin"
@@ -139,16 +128,18 @@ import Header from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
+// import MovieInfo from '@/components/movieInfo'
 export default {
   name: 'index',
   data() {
     return {
       isLoading: false,
       status: {
-        addLoading: false
+        addLoading: false,
       },
       products: [],
-      product: {}
+      product: {},
+      info: [],
     }
   },
 
@@ -156,7 +147,8 @@ export default {
     Header,
     Footer,
     MovieBanner,
-    Cart
+    Cart,
+    // MovieInfo
   },
   methods: {
     getProducts() {
@@ -170,23 +162,13 @@ export default {
         this.isLoading = false
       })
     },
-    addCart(product_id, qty = 0) {
-      const api = `http://localhost:3000/api/v1/cart`
-      const cart = {
-        product_id: 'f65b8846-3',
-        product_qty: qty
-      }
-      this.status.addLoading = id
-      Vue.axios.post(api, { data: cart }).then(response => {
-        console.log(response.data)
-        this.status.addLoading = ''
-        // this.products = response.data.
-      })
-    }
+    productInput() {
+      this.info = this.products
+    },
   },
   created() {
     this.getProducts()
-  }
+  },
 }
 </script>
 
