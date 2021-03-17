@@ -6,15 +6,16 @@
 
 <script>
 export default {
-  name: "App"
-  // created() {
-  //   const api = `${process.env.APIPATH}/api/${process.env.COSTOMPATH}/products`;
-  //   // console.log(process.env.APIPATH);
-  //   // console.log(process.env.COSTOMPATH);
-  //   Vue.axios.get(api).then(response => {
-  //     console.log(response.data);
-  //   });
-  // }
+  name: "App",
+  created() {
+    // console.log(process.env.THEOAPI);
+    // const api = `${process.env.THEOAPI}/api/v1/product`;
+    const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product";
+    // const api = "  http://localhost:3000/product";//假資料
+    Vue.axios.get(api).then(response => {
+      console.log(response.data);
+    });
+  }
 };
 </script>
 
@@ -28,5 +29,6 @@ body {
   color: #000;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 </style>
