@@ -68,10 +68,11 @@
             <div class="tab-pane active" id="home">
               <div class="row">
                 <!-- 第1張 -->
+                <!-- v-for 動態綁定的 key，可以使用 key 或是 item.id ，用item.id 是因為他是唯一的 -->
                 <div
                   class="col-md-6 mb-4 col-lg-4"
-                  v-for="item in products"
-                  :key="item"
+                  v-for="(item, key) in products"
+                  :key="item.id"
                 >
                   <div class="card h-100 border-0 bg-dark text-light cardTitle">
                     <div class="type">{{ item.product_type }}</div>
@@ -94,16 +95,25 @@
                     <div
                       class="card-footer d-flex justify-content-around border-white"
                     >
-                      <router-link
+                      <!-- <router-link
                         to="/movieInfo"
                         class="btn btn-outline-light btn-sm"
                         @click="getProduct(id)"
+                        data-toggle="modal"
+                        data-target="#productModal"
                         >查看更多</router-link
-                      >
+                      > -->
                       <button
                         class="btn btn-outline-danger btn-sm"
-                        @click="addCart"
+                        @click="addCart(product_id, qty)"
                       >
+                        <i
+                          class="fas fa-spinner fa-spin"
+                          v-if="status.addLoading"
+                        ></i>
+                        測試查看
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm">
                         <i
                           class="fas fa-spinner fa-spin"
                           v-if="status.addLoading"
@@ -125,20 +135,21 @@
 </template>
 
 <script>
-import Header from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import MovieBanner from "@/components/MovieBanner";
-import Cart from "@/components/Cart";
+import Header from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import MovieBanner from '@/components/MovieBanner'
+import Cart from '@/components/Cart'
 export default {
-  name: "index",
+  name: 'index',
   data() {
     return {
       isLoading: false,
       status: {
         addLoading: false
       },
-      products: []
-    };
+      products: [],
+      product: {}
+    }
   },
 
   components: {
@@ -149,39 +160,34 @@ export default {
   },
   methods: {
     getProducts() {
-      const api = "http://localhost:3000/products";
+      const api = 'http://localhost:3000/products'
       // const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product";
-      this.isLoading = true;
+      this.isLoading = true
       Vue.axios.get(api).then(response => {
         // console.log(response.data);
         // console.log(response.data.products);
-        this.products = response.data;
-        this.isLoading = false;
-      });
+        this.products = response.data
+        this.isLoading = false
+      })
     },
-    getProduct(id) {
-      const api = "http://localhost:3000/products/{id}";
-      // const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product/{product_id}";
-      Vue.axios.get(api).then(response => {
-        // console.log(response.data);
-        // console.log(response.data.products);
-        this.products = response.data.products;
-      });
-    },
-    addCart() {
-      this.status.addLoading = true;
-      const api = "http://localhost:3000/cart";
-      Vue.axios.get(api).then(response => {
-        console.log(response.data);
-        this.status.addLoading = false;
+    addCart(product_id, qty = 0) {
+      const api = `http://localhost:3000/api/v1/cart`
+      const cart = {
+        product_id: 'f65b8846-3',
+        product_qty: qty
+      }
+      this.status.addLoading = id
+      Vue.axios.post(api, { data: cart }).then(response => {
+        console.log(response.data)
+        this.status.addLoading = ''
         // this.products = response.data.
-      });
+      })
     }
   },
   created() {
-    this.getProducts();
+    this.getProducts()
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
