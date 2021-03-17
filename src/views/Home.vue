@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <Header></Header>
     <MovieBanner></MovieBanner>
     <!-- 下半部所有電影內容 -->
@@ -62,6 +63,7 @@
               </form>
             </div>
           </div>
+          <!-- 所有電影類型 -->
           <div class="tab-content">
             <div class="tab-pane active" id="home">
               <div class="row">
@@ -92,14 +94,22 @@
                     <div
                       class="card-footer d-flex justify-content-around border-white"
                     >
-                      <a
-                        href="./movie12.html"
+                      <router-link
+                        to="/movieInfo"
                         class="btn btn-outline-light btn-sm"
-                        >查看更多</a
+                        @click="getProduct(id)"
+                        >查看更多</router-link
                       >
-                      <a href="#" class="btn btn-outline-danger btn-sm"
-                        >加入購物車</a
+                      <button
+                        class="btn btn-outline-danger btn-sm"
+                        @click="addCart"
                       >
+                        <i
+                          class="fas fa-spinner fa-spin"
+                          v-if="status.addLoading"
+                        ></i>
+                        加入購物車
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -109,38 +119,62 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
+    <Footer />
+    <Cart />
   </div>
 </template>
 
 <script>
 import Header from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import MovieCard from "@/components/MovieCard";
 import MovieBanner from "@/components/MovieBanner";
-// import Slider from "@/components/Movieslider";
+import Cart from "@/components/Cart";
 export default {
   name: "index",
   data() {
     return {
+      isLoading: false,
+      status: {
+        addLoading: false
+      },
       products: []
     };
   },
+
   components: {
     Header,
     Footer,
-    MovieCard,
-    MovieBanner
-    // Slider
+    MovieBanner,
+    Cart
   },
   methods: {
     getProducts() {
       const api = "http://localhost:3000/products";
       // const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product";
+      this.isLoading = true;
       Vue.axios.get(api).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         // console.log(response.data.products);
         this.products = response.data;
+        this.isLoading = false;
+      });
+    },
+    getProduct(id) {
+      const api = "http://localhost:3000/products/{id}";
+      // const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product/{product_id}";
+      Vue.axios.get(api).then(response => {
+        // console.log(response.data);
+        // console.log(response.data.products);
+        this.products = response.data.products;
+      });
+    },
+    addCart() {
+      this.status.addLoading = true;
+      const api = "http://localhost:3000/cart";
+      Vue.axios.get(api).then(response => {
+        console.log(response.data);
+        this.status.addLoading = false;
+        // this.products = response.data.
       });
     }
   },

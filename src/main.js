@@ -9,14 +9,19 @@ window.Vue = Vue;
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 import "swiper/css/swiper.css";
 import VueAwesomeSwiper from "vue-awesome-swiper";
 Vue.use(VueAwesomeSwiper);
 
 Vue.use(VueAxios, axios);
-//這樣所有頁面只要加上( | currency ) ，就套上千分號了。
+
+Vue.component("Loading", Loading); // loading 全域啟用
+
 Vue.filter("currency", currencyFilter);
+//這樣所有頁面只要加上( | currency ) ，就套上千分號了。
 Vue.config.productionTip = false;
 
 axios.defaults.withCredentials = true;
