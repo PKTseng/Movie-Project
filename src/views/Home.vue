@@ -7,7 +7,7 @@
     <div class="container mt-5">
       <div class="row">
         <!-- 左邊選擇電影類型 -->
-        <div class="col-md-3">
+        <div class="col-12 col-lg-3">
           <div class="list-group sticky-top listMenu">
             <a
               data-toggle="list"
@@ -36,7 +36,7 @@
           </div>
         </div>
         <!-- 右邊所有電影清單 -->
-        <div class="col-md-9">
+        <div class="col-12 col-lg-9">
           <!-- 標題 & 搜尋欄 -->
           <div class="row">
             <div class="col-12 d-flex justify-content-between">
@@ -98,7 +98,7 @@
                       <router-link
                         to="/movieInfo"
                         class="btn btn-outline-light btn-sm"
-                        :info="products"
+                        :info="item"
                         @click="info"
                         >查看更多</router-link
                       >
@@ -128,7 +128,7 @@ import Header from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
-// import MovieInfo from '@/components/movieInfo'
+// import MovieInfo from '@/components/movieInfo';
 export default {
   name: 'index',
   data() {
@@ -142,7 +142,6 @@ export default {
       info: [],
     }
   },
-
   components: {
     Header,
     Footer,
@@ -153,11 +152,9 @@ export default {
   methods: {
     getProducts() {
       const api = 'http://localhost:3000/products'
-      // const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product";
       this.isLoading = true
       Vue.axios.get(api).then(response => {
-        // console.log(response.data);
-        // console.log(response.data.products);
+        console.log(response.data)
         this.products = response.data
         this.isLoading = false
       })

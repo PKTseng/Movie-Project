@@ -10,11 +10,11 @@ export default {
   created() {
     // console.log(process.env.THEOAPI);
     // const api = `${process.env.THEOAPI}/api/v1/product`;
-    const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product";
     // const api = "  http://localhost:3000/product";//假資料
-    Vue.axios.get(api).then(response => {
-      console.log(response.data);
-    });
+    // const api = "http://bb8fa0d4b539.ngrok.io/api/v1/product";
+    // Vue.axios.get(api).then(response => {
+    //   console.log(response.data);
+    // });
   }
 };
 </script>
