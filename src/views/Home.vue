@@ -71,7 +71,7 @@
                 <!-- v-for 動態綁定的 key，可以使用 key 或是 item.id ，用item.id 是因為他是唯一的 -->
                 <div
                   class="col-md-6 mb-4 col-lg-4"
-                  v-for="(item, key) in products"
+                  v-for="item in products"
                   :key="item.id"
                 >
                   <div class="card h-100 border-0 bg-dark text-light cardTitle">
@@ -106,18 +106,7 @@
                       <button class="btn btn-outline-light btn-sm mb-2">
                         加入我的最愛
                       </button>
-                      <button
-                        class="btn btn-outline-light btn-sm mb-2"
-                        data-toggle="modal"
-                        data-target="#movieInfo"
-                        @click="getProduct(item.id)"
-                      >
-                        <i
-                          class="fas fa-spinner fa-spin"
-                          v-if="status.loadingItem === item.id"
-                        ></i>
-                        我要租借
-                      </button>
+
                       <button class="btn btn-outline-danger btn-sm mb-2">
                         <i
                           class="fas fa-spinner fa-spin"
@@ -137,47 +126,11 @@
     <Footer />
     <Cart />
     <!-- <MovieRent /> -->
-    <!-- model -->
-    <div
-      class="modal fade"
-      id="movieInfo"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="movieInfoLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- 內容 -->
-          <div class="modal-body">
-            <img :src="rentInfo.image_url" alt="" />
-            <h5 id="movieInfoLabel" class="mt-3">
-              {{ rentInfo.product_name }}
-            </h5>
-            <select name="" class="form-control mt-3" v-model="rentInfo.num">
-              <option :value="num" v-for="num in 10" :key="num">
-                選購 {{ num }}
-              </option>
-            </select>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
+// import $ from 'jquery'
 import Header from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
@@ -223,17 +176,7 @@ export default {
         this.isLoading = false
       })
     },
-    getProduct(id) {
-      this.status.loadingItem = id
-      // const api = `/data/api/v1/product/${id}`
-      const api = `/data/api/v1/product/f65b8846-3`
-      Vue.axios.get(api).then(res => {
-        console.log(res.data)
-        $('#movieInfo').modal('show')
-        this.rentInfo = res.data
-        this.status.loadingItem = ''
-      })
-    },
+
     // 以防萬一的 fetch
     // getProduct() {
     //   fetch('http://example.com/movies.json')
