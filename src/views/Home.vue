@@ -135,9 +135,7 @@ import Header from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
-// import MovieInfo from '@/views/MovieInfo'
 // import MovieCard from '@/components/MovieCard/MovieCard'
-import MovieRent from '@/components/MovieCard/MovieRent'
 
 export default {
   name: 'index',
@@ -162,9 +160,7 @@ export default {
     Footer,
     MovieBanner,
     Cart,
-    // MovieInfo,
     // MovieCard,
-    MovieRent,
   },
   methods: {
     getProducts() {
