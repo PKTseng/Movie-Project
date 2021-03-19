@@ -72,53 +72,58 @@
                 <div
                   class="col-md-6 mb-4 col-lg-4"
                   v-for="(item, key) in products"
-                  :key="key"
+                  :key="item.id"
                 >
                   <div class="card h-100 border-0 bg-dark text-light cardTitle">
                     <div class="type">{{ item.product_type }}</div>
-                    <div class="thumbnail">
-                      <img
+                    <router-link
+                      :to="{
+                        name: 'MovieInfo',
+                        params: {
+                          id: item.product_id,
+                          img: item.image_url,
+                          name: item.product_name,
+                          type: item.product_type,
+                          description: item.description,
+                          price: item.price,
+                          score: item.movie_score,
+                          time: item.movie_runtime,
+                        },
+                      }"
+                      class="thumbnail"
+                      ><img
                         :src="item.image_url"
                         class="card-img-top"
                         alt="..."
-                      />
-                    </div>
+                    /></router-link>
 
                     <div
                       class="card-body d-flex justify-content-between align-items-center"
                     >
-                      <h4 class="m-0">{{ item.product_name }}</h4>
-                      <button class="btn btn-sm">
-                        <i class="fa-heart fa-lg text-white far"></i>
-                      </button>
+                      <h4 class="m-0 movieName">{{ item.product_name }}</h4>
                     </div>
-                    <div
-                      class="card-footer d-flex justify-content-around border-white"
-                    >
-                      <router-link
-                        :to="{
-                          name: 'MovieInfo',
-                          params: {
-                            id: item.product_id,
-                            img: item.image_url,
-                            name: item.product_name,
-                            type: item.product_type,
-                            description: item.description,
-                            price: item.price,
-                            score: item.movie_score,
-                            time: item.movie_runtime,
-                          },
-                        }"
-                        class="btn btn-outline-light btn-sm"
-                        :info="products"
-                        >查看更多</router-link
+                    <div class="px-2 d-flex flex-column border-white">
+                      <button class="btn btn-outline-light btn-sm mb-2">
+                        加入我的最愛
+                      </button>
+                      <button
+                        class="btn btn-outline-light btn-sm mb-2"
+                        data-toggle="modal"
+                        data-target="#movieInfo"
+                        @click="getProduct(item.id)"
                       >
-                      <button class="btn btn-outline-danger btn-sm">
+                        <i
+                          class="fas fa-spinner fa-spin"
+                          v-if="status.loadingItem === item.id"
+                        ></i>
+                        我要租借
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm mb-2">
                         <i
                           class="fas fa-spinner fa-spin"
                           v-if="status.addLoading"
                         ></i>
-                        加入購物車
+                        我要購買
                       </button>
                     </div>
                   </div>
@@ -131,15 +136,55 @@
     </div>
     <Footer />
     <Cart />
+    <!-- <MovieRent /> -->
+    <!-- model -->
+    <div
+      class="modal fade"
+      id="movieInfo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="movieInfoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- 內容 -->
+          <div class="modal-body">
+            <img :src="rentInfo.image_url" alt="" />
+            <h5 id="movieInfoLabel" class="mt-3">
+              {{ rentInfo.product_name }}
+            </h5>
+            <select name="" class="form-control mt-3" v-model="rentInfo.num">
+              <option :value="num" v-for="num in 10" :key="num">
+                選購 {{ num }}
+              </option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import $ from 'jquery'
 import Header from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
-import MovieInfo from '@/views/MovieInfo'
+// import MovieInfo from '@/views/MovieInfo'
+// import MovieCard from '@/components/MovieCard/MovieCard'
+import MovieRent from '@/components/MovieCard/MovieRent'
 
 export default {
   name: 'index',
@@ -147,7 +192,7 @@ export default {
     return {
       isLoading: false,
       status: {
-        addLoading: false,
+        loadingItem: false,
       },
       products: [], // render
       movieType: {
@@ -155,7 +200,7 @@ export default {
         motion: [],
         love: null,
       },
-      product: {},
+      rentInfo: {},
       info: [],
     }
   },
@@ -164,44 +209,41 @@ export default {
     Footer,
     MovieBanner,
     Cart,
-    MovieInfo,
+    // MovieInfo,
+    // MovieCard,
+    MovieRent,
   },
   methods: {
     getProducts() {
-      // const api = 'http://localhost:3000/products'
-      // const api = 'http://9c95224d008a.ngrok.io/api/v1/product'
-      const api = 'https://9c95224d008a.ngrok.io/api/v1/product'
       this.isLoading = true
+      const api = '/data/api/v1/product'
       Vue.axios.get(api).then(response => {
         // console.log(response.data)
-        this.movieType.allMovie = response.data
-        this.products = response.data
+        this.products = response.data.data
         this.isLoading = false
       })
     },
-    // switchType(tag) {
-    //   switch (tag) {
-    //     case 1: // motion
-    //     if (this.movieType.motion.length > 0) {
-    //       this.products = this.movieType.motion;
-    //       return;
-    //     }
-    //     // let array = [];
-    //       this.moiveType.allMovie.for(let i= 0; i <8 ; i++; ) {
-    //         if (this.moiveType.allMovie[i].product_type === "motion")  {
-    //           this.moiveType.motion.push(this.moiveType.allMovie[i])
-    //         }
-    //       }
-    //       let array = this.moiveType.allMovie.filter(movie => movie.product_type === "motion");
-    //       // this.moiveType.motion = array;
-    //       this.products = this.movieType.motion;
-    //     break;
-    //     case 2: // love
-    //   }
-    // },
-    productInput() {
-      this.info = this.products[0]
+    getProduct(id) {
+      this.status.loadingItem = id
+      // const api = `/data/api/v1/product/${id}`
+      const api = `/data/api/v1/product/f65b8846-3`
+      Vue.axios.get(api).then(res => {
+        console.log(res.data)
+        $('#movieInfo').modal('show')
+        this.rentInfo = res.data
+        this.status.loadingItem = ''
+      })
     },
+    // 以防萬一的 fetch
+    // getProduct() {
+    //   fetch('http://example.com/movies.json')
+    //     .then(function (response) {
+    //       return response.json()
+    //     })
+    //     .then(function (myJson) {
+    //       console.log(myJson)
+    //     })
+    // },
   },
   created() {
     this.getProducts()
@@ -212,6 +254,10 @@ export default {
 <style scoped lang="scss">
 html {
   height: 100%;
+}
+
+.movieName {
+  font-weight: 600;
 }
 // 類型選單
 .listMenu {
@@ -231,6 +277,7 @@ html {
 .cardTitle {
   position: relative;
   overflow: hidden;
+  border: 0;
   .thumbnail {
     overflow: hidden;
     img {
