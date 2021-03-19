@@ -72,7 +72,7 @@
                 <div
                   class="col-md-6 mb-4 col-lg-4"
                   v-for="(item, key) in products"
-                  :key="item.id"
+                  :key="key"
                 >
                   <div class="card h-100 border-0 bg-dark text-light cardTitle">
                     <div class="type">{{ item.product_type }}</div>
@@ -96,10 +96,21 @@
                       class="card-footer d-flex justify-content-around border-white"
                     >
                       <router-link
-                        to="/movieInfo"
+                        :to="{
+                          name: 'MovieInfo',
+                          params: {
+                            id: item.product_id,
+                            img: item.image_url,
+                            name: item.product_name,
+                            type: item.product_type,
+                            description: item.description,
+                            price: item.price,
+                            score: item.movie_score,
+                            time: item.movie_runtime,
+                          },
+                        }"
                         class="btn btn-outline-light btn-sm"
-                        :info="item"
-                        @click="info"
+                        :info="products"
                         >查看更多</router-link
                       >
                       <button class="btn btn-outline-danger btn-sm">
@@ -128,7 +139,8 @@ import Header from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
-// import MovieInfo from '@/components/movieInfo';
+import MovieInfo from '@/views/MovieInfo'
+
 export default {
   name: 'index',
   data() {
@@ -137,7 +149,12 @@ export default {
       status: {
         addLoading: false,
       },
-      products: [],
+      products: [], // render
+      movieType: {
+        allMovie: null, // all movie
+        motion: [],
+        love: null,
+      },
       product: {},
       info: [],
     }
@@ -147,20 +164,43 @@ export default {
     Footer,
     MovieBanner,
     Cart,
-    // MovieInfo
+    MovieInfo,
   },
   methods: {
     getProducts() {
-      const api = 'http://localhost:3000/products'
+      // const api = 'http://localhost:3000/products'
+      // const api = 'http://9c95224d008a.ngrok.io/api/v1/product'
+      const api = 'https://9c95224d008a.ngrok.io/api/v1/product'
       this.isLoading = true
       Vue.axios.get(api).then(response => {
-        console.log(response.data)
+        // console.log(response.data)
+        this.movieType.allMovie = response.data
         this.products = response.data
         this.isLoading = false
       })
     },
+    // switchType(tag) {
+    //   switch (tag) {
+    //     case 1: // motion
+    //     if (this.movieType.motion.length > 0) {
+    //       this.products = this.movieType.motion;
+    //       return;
+    //     }
+    //     // let array = [];
+    //       this.moiveType.allMovie.for(let i= 0; i <8 ; i++; ) {
+    //         if (this.moiveType.allMovie[i].product_type === "motion")  {
+    //           this.moiveType.motion.push(this.moiveType.allMovie[i])
+    //         }
+    //       }
+    //       let array = this.moiveType.allMovie.filter(movie => movie.product_type === "motion");
+    //       // this.moiveType.motion = array;
+    //       this.products = this.movieType.motion;
+    //     break;
+    //     case 2: // love
+    //   }
+    // },
     productInput() {
-      this.info = this.products
+      this.info = this.products[0]
     },
   },
   created() {
@@ -170,6 +210,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+html {
+  height: 100%;
+}
 // 類型選單
 .listMenu {
   top: 120px;

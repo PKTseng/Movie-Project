@@ -3,13 +3,13 @@ import VueRouter from 'vue-router'
 
 const Home = () => import('@/views/Home')
 const Favorite = () => import('@/views/Favorite')
-const MovieInfo = () => import('@/components/MovieInfo')
+const MovieInfo = () => import('@/views/MovieInfo')
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '*',
+    path: '/',
     redirect: '/home',
   },
   {
@@ -18,14 +18,14 @@ const routes = [
     name: 'Home',
     // children: [
     //   {
-    //     path: '/movieInfo',
+    //     path: 'movieInfo',
     //     component: MovieInfo,
     //     name: 'MovieInfo',
     //   },
     // ],
   },
   {
-    path: '/movieInfo',
+    path: '/movieInfo/:id',
     component: MovieInfo,
     name: 'MovieInfo',
   },
@@ -38,7 +38,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  // mode: "history"
+  // mode: 'history',
 })
 
 export default router
