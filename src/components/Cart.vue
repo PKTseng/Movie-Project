@@ -67,7 +67,7 @@
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +84,7 @@ export default {};
 .btnCart {
   position: relative;
   .cartTable {
-    z-index: 1;
+    z-index: 3;
   }
   .badge {
     position: absolute;
@@ -99,8 +99,9 @@ export default {};
 // 購物車 table
 .dropdownMenu {
   min-width: 300px;
-
   // 強制顯示左邊
+  position: fixed;
+  z-index: 3;
   right: 0;
   left: auto;
 }
