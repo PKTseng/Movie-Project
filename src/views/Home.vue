@@ -125,7 +125,6 @@
     </div>
     <Footer />
     <Cart />
-    <!-- <MovieRent /> -->
   </div>
 </template>
 
@@ -143,7 +142,7 @@ export default {
     return {
       isLoading: false,
       status: {
-        loadingItem: false,
+        addLoading: false,
       },
       products: [], // render
       movieType: {
