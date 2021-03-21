@@ -46,7 +46,7 @@
                       type="button"
                       id="button-addon2"
                     >
-                      <i class="fas fa-search"></i>
+                      <i class="fas fa-times"></i>
                     </button>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
           <!-- 所有電影類型 -->
           <div class="tab-content">
             <div class="tab-pane active" id="home">
-              <div class="row">
+              <div class="row cardList">
                 <!-- 第1張 -->
                 <!-- v-for 動態綁定的 key，可以使用 key 或是 item.id ，用item.id 是因為他是唯一的 -->
                 <div
@@ -131,6 +131,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cardList {
+  margin-bottom: 100px;
+}
 .movieName {
   font-weight: 600;
 }
