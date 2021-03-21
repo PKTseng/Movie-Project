@@ -15,7 +15,7 @@
             <a
               href="#"
               class="list-group-item list-group-item-action list-group-item-dark d-flex align-items-center"
-              v-for="item in sideBar"
+              v-for="item in categorys"
             >
               <i class="fas fa-film fa-2x videoIcon"></i>
               <span class="ml-3 menuText">{{ item }}類</span>
@@ -88,7 +88,7 @@ export default {
       products: [], // render
       sideBar: [],
       newList: '',
-      category: [],
+      categorys: [],
     }
   },
   methods: {
@@ -104,7 +104,12 @@ export default {
       })
     },
     getCategorys: function () {
-      console.log(this.products)
+      let categories = this.products.map(element => {
+        return element.product_type
+      })
+      this.categorys = categories.filter(
+        (item, index) => categories.indexOf(item) === index
+      )
     },
   },
   mounted() {
