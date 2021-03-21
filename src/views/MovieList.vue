@@ -61,7 +61,7 @@
                 <!-- v-for 動態綁定的 key，可以使用 key 或是 item.id ，用item.id 是因為他是唯一的 -->
                 <div
                   class="col-md-6 mb-4 col-lg-4"
-                  v-for="item in products"
+                  v-for="item in renderProduct"
                   :key="item.id"
                 >
                   <MovieCard :item="item" />
@@ -89,6 +89,7 @@ export default {
       sideBar: [],
       categoryWithCount: {},
       categorys: [],
+      renderProduct: [],
     }
   },
   methods: {
@@ -99,6 +100,7 @@ export default {
         // console.log(response.data.data)
         // console.log(response)
         this.products = response.data.data
+        this.renderProduct = response.data.data
         this.getCategorys()
         this.getCategoryWithCount()
         this.isLoading = false
@@ -135,7 +137,9 @@ export default {
       return this.categoryWithCount[category]
     },
     categoryItem: function (category) {
-      console.log(category)
+      this.renderProduct = this.products.filter(function (item) {
+        return category === item.product_type
+      })
     },
   },
   mounted() {
