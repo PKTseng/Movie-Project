@@ -23,9 +23,13 @@
       <h4 class="m-0 movieName">{{ item.product_name }}</h4>
     </div>
     <div class="px-2 d-flex flex-column border-white">
-      <button class="btn btn-outline-light btn-sm mb-2">加入我的最愛</button>
+      <button class="btn btn-outline-light btn-sm mb-2 px-2">
+        <i class="fas fa-heart px-2"></i>
+        加入我的最愛
+      </button>
 
       <button class="btn btn-outline-danger btn-sm mb-2">
+        <i class="fas fa-cart-plus px-2"></i>
         <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
         我要購買
       </button>
