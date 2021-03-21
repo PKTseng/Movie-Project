@@ -87,7 +87,7 @@ export default {
       isLoading: false,
       products: [], // render
       sideBar: [],
-      newList: '',
+      categoryWithCount: {},
       categorys: [],
     }
   },
@@ -100,6 +100,7 @@ export default {
         // console.log(response)
         this.products = response.data.data
         this.getCategorys()
+        this.getCategoryWithCount()
         this.isLoading = false
       })
     },
@@ -110,6 +111,25 @@ export default {
       this.categorys = categories.filter(
         (item, index) => categories.indexOf(item) === index
       )
+    },
+    getCategoryWithCount() {
+      let count_hash = {}
+      // let  count_hash[item] = 0
+      // console.log(this.categorys)
+      for (const category of this.categorys) {
+        // console.log(item)
+        this.products.forEach(element => {
+          if (element.product_type === category) {
+            // count_hash[category] = 0
+            if (typeof count_hash[category] === 'undefined') {
+              count_hash[category] = 0
+            }
+            count_hash[category] = count_hash[category] + 1
+          }
+        })
+      }
+      console.log(count_hash)
+      this.categoryWithCount = count_hash
     },
   },
   mounted() {
