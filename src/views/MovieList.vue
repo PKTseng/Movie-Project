@@ -7,7 +7,6 @@
         <div class="col-12 col-lg-3">
           <div class="list-group sticky-top listMenu">
             <a
-              href="#home"
               class="list-group-item list-group-item-action active list-group-item-dark"
             >
               <span class="menuText">全部顯示</span>
@@ -16,6 +15,7 @@
               href="#"
               class="list-group-item list-group-item-action list-group-item-dark d-flex align-items-center"
               v-for="item in categorys"
+              @click.prevent="categoryItem(item)"
             >
               <i class="fas fa-film fa-2x videoIcon"></i>
               <span class="ml-3 menuText">{{ item }}類</span>
@@ -133,6 +133,9 @@ export default {
     },
     getCount: function (category) {
       return this.categoryWithCount[category]
+    },
+    categoryItem: function (category) {
+      console.log(category)
     },
   },
   mounted() {
