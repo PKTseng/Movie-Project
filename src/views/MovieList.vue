@@ -20,7 +20,7 @@
               <i class="fas fa-film fa-2x videoIcon"></i>
               <span class="ml-3 menuText">{{ item }}類</span>
               <span class="badge badge-light badge-pill ml-auto">{{
-                item.lenght
+                getCount(item)
               }}</span>
             </a>
           </div>
@@ -112,7 +112,7 @@ export default {
         (item, index) => categories.indexOf(item) === index
       )
     },
-    getCategoryWithCount() {
+    getCategoryWithCount: function () {
       let count_hash = {}
       // let  count_hash[item] = 0
       // console.log(this.categorys)
@@ -128,8 +128,11 @@ export default {
           }
         })
       }
-      console.log(count_hash)
+      // console.log(count_hash)
       this.categoryWithCount = count_hash
+    },
+    getCount: function (category) {
+      return this.categoryWithCount[category]
     },
   },
   mounted() {
