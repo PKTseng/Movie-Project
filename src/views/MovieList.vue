@@ -88,45 +88,31 @@ export default {
       products: [], // render
       sideBar: [],
       newList: '',
+      category: [],
     }
   },
   methods: {
-    getProducts() {
+    getProducts: function () {
       this.isLoading = true
       const api = '/data/api/v1/product'
       Vue.axios.get(api).then(response => {
         // console.log(response.data.data)
+        // console.log(response)
         this.products = response.data.data
+        this.getCategorys()
         this.isLoading = false
       })
     },
-    productList() {
-      const api = '/data/api/v1/product'
-      Vue.axios.get(api).then(response => {
-        // console.log(response.data.data)
-        this.newList = response.data.data
-        let newArry = []
-        for (const item of this.products) {
-          // console.log(item)
-          // console.log(item.product_type)
-          const type = item.product_type
-          // console.log(type)
-          // console.log(typeof type)
-          newArry.push(type)
-        }
-        console.log(newArry)
-        let newList = newArry.filter((element, index, arry) => {
-          return arry.indexOf(element) === index
-        })
-        this.sideBar = newList
-      })
+    getCategorys: function () {
+      console.log(this.products)
     },
   },
-  created() {
+  mounted() {
     this.getProducts()
-    this.productList()
   },
-  // getProduct() {
+  // created() {
+  //   this.getProducts()
+  // },
 }
 </script>
 
