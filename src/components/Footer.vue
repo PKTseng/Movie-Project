@@ -29,7 +29,7 @@ export default {
 // footer
 .footer {
   position: absolute;
-  bottom: 0px;
+  bottom: -100px;
   left: 0;
   right: 0;
   font-size: 20px;
