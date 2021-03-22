@@ -1,23 +1,29 @@
 <template>
   <div>
     <Navbar />
-    <section class="container mt-5 h-100">
+    <section class="container mt-5">
       <div class="row text-white">
-        <div class="col-md-5 movie d-flex justify-content-end">
+        <div class="col-md-5 movie d-flex justify-content-end h-100">
           <img :src="movieInfo.img" alt="" />
         </div>
         <div class="col-md-5 d-flex flex-column justify-content-lg-between">
           <div class="movieInfo">
-            <h2>{{ movieInfo.name }}</h2>
-            <h5 class="d-flex align-items-center">
-              類型:
-              <span class="badge badge-success mx-1 p-2">{{
-                movieInfo.type
-              }}</span>
-            </h5>
-            <p>{{ movieInfo.description }}</p>
-            <p>滿意度 : {{ movieInfo.score }}</p>
-            <p>時數 : {{ movieInfo.time }}</p>
+            <h2 class="d-flex align-items-center">
+              {{ movieInfo.name }}
+            </h2>
+            <p class="movieText">
+              類型 :
+              <span class="movieSpan category">{{ movieInfo.type }}</span>
+            </p>
+
+            <p class="movieText">
+              評分 : <span class="movieSpan score">{{ movieInfo.score }}</span>
+            </p>
+            <p class="movieText">
+              放映時數 :
+              <span class="movieSpan time">{{ movieInfo.time }}</span>
+            </p>
+            <p class="description">{{ movieInfo.description }}</p>
           </div>
           <!-- 價格 -->
           <div>
@@ -47,12 +53,14 @@
       </div>
     </section>
     <Footer />
+    <Cart />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Cart from '@/components/Cart.vue'
 
 export default {
   name: 'MovieInfo',
@@ -73,6 +81,7 @@ export default {
   components: {
     Navbar,
     Footer,
+    Cart,
   },
   // mounted() {
   //   this.movieName = this.$route.params.id
@@ -80,4 +89,35 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.description {
+  font-weight: 500;
+  font-size: 16px;
+}
+.movieText {
+  font-size: 20px;
+}
+.movieSpan {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.category {
+  background: #27ae60;
+  font-weight: 600;
+}
+
+.score {
+  background: #e67e22;
+}
+
+.time {
+  background: #3498db;
+}
+
+.movieInfo {
+  @media (max-width: 768px) {
+    margin-top: 50px;
+  }
+}
+</style>
