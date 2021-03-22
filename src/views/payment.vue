@@ -34,24 +34,6 @@
                 </td>
               </tr>
               <tr>
-                <td class="d-flex align-items-center">
-                  <div class="priceMovie">
-                    <img src="@/assets/movies/movie2.jpg" alt="" />
-                  </div>
-                  <div class="flex-column px-3">
-                    <h5>白頭山：半島浩劫</h5>
-                    <span class="badge badge-warning">冒險</span>
-                  </div>
-                </td>
-                <td class="align-middle">1/部</td>
-                <td class="align-middle text-right">$ 300</td>
-                <td class="align-middle text-right">
-                  <button class="btn btn-outline-danger btn-sm">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
                 <td></td>
                 <td class="align-middle text-right">總價</td>
                 <td class="align-middle text-right">$1000</td>
@@ -122,7 +104,7 @@
               ></textarea>
             </div>
             <div class="text-right">
-              <button class="btn btn-outline-danger">送出訂單</button>
+              <button class="btn btn-outline-danger orderBtn">送出訂單</button>
             </div>
           </form>
         </div>
@@ -155,5 +137,8 @@ label {
   font-size: 24px;
   font-weight: 600;
   margin-top: 20px;
+}
+.orderBtn {
+  margin-bottom: 200px;
 }
 </style>
