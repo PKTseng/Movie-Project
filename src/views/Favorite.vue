@@ -6,20 +6,16 @@
       <h1 class="text-white">收藏清單</h1>
       <div class="row favorite">
         <!--  第1張 魔物獵人 劇情類-->
-        <div class="col-lg-4 col-md-6 mb-4">
+        <div class="col-lg-4 col-md-6 mb-4" v-for="item in products">
           <div class="card h-100 border-0 bg-dark text-light cardTitle">
-            <div class="type">類型</div>
+            <div class="type">{{ item.product_type }}</div>
             <div class="thumbnail">
-              <img
-                src="@/assets/movies/movie3.jpg"
-                class="card-img-top"
-                alt="..."
-              />
+              <img :src="item.image_url" class="card-img-top" alt="..." />
             </div>
             <div
               class="card-body d-flex justify-content-between align-items-center"
             >
-              <h4 class="m-0 movieName">電影名稱</h4>
+              <h4 class="m-0 movieName">{{ item.product_name }}</h4>
             </div>
             <div class="px-2 d-flex flex-column border-white">
               <button class="btn btn-outline-light btn-sm mb-2 py-2">
@@ -53,6 +49,7 @@ export default {
     return {
       isLoading: false,
       products: [],
+      movieName: [],
     }
   },
   methods: {
@@ -63,8 +60,6 @@ export default {
           return response.json()
         })
         .then(response => {
-          // console.log(typeof response.data)
-          // console.log(response.data)
           this.products = response.data
           this.isLoading = false
         })
