@@ -75,7 +75,7 @@ export default {
     Footer,
   },
   // mounted() {
-  //   this.moiveName = this.$route.params.id
+  //   this.movieName = this.$route.params.id
   // },
 }
 </script>
