@@ -141,9 +141,6 @@ export default {
   mounted() {
     this.getProducts()
   },
-  // created() {
-  //   this.getProducts()
-  // },
 }
 </script>
 
