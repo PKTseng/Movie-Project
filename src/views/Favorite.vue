@@ -85,13 +85,45 @@
 </template>
 
 <script>
-import Header from "@/components/Navbar";
+import Header from '@/components/Navbar'
 export default {
-  name: "Favorite",
+  name: 'Favorite',
   components: {
-    Header
-  }
-};
+    Header,
+  },
+}
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+// 卡片
+.cardTitle {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  .thumbnail {
+    overflow: hidden;
+    img {
+      transform: scale(1, 1);
+      transition: 0.5s;
+    }
+    img:hover {
+      transform: scale(1.1, 1.1);
+    }
+  }
+}
+
+// 卡片標籤
+.type {
+  z-index: 1;
+  font-weight: 700;
+  padding: 5px;
+  width: 120px;
+  left: -30px;
+  top: 10px;
+  text-align: center;
+  position: absolute;
+  background: #ee5a24;
+  transform: rotate(-45deg);
+  font-size: 18px;
+}
+</style>
