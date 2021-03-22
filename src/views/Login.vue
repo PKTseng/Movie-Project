@@ -46,12 +46,22 @@ export default {
   },
   methods: {
     signIn() {
-      const api = `http://localhost:3000/api/v1/login`;
-      // const api = `${process.env.THEOAPI}/api/v1/login`;
-      // console.log(process.env.THEO);
-      Vue.axios.post(api, this.user).then(response => {
-        console.log(response.data);
-      });
+      // 練習打登入的 API
+      // const api = `${process.env.APIPATH}/signin`;
+      // Vue.axios.post(api, this.user).then(response => {
+      // console.log(response.data);
+      // if (response.data.success) {
+      //   this.$router.push("/dashboard"); //暫時導入到首頁，日後要改
+      // }
+      // });
+      // 以下為學長的 api
+      // const api = `http://localhost:3000/api/v1/login`;
+      // const api = `http://localhost:3000/api/v1/signup`;
+      // const api = `${process.env.THEOAPI}/api/v1/admin/login`;
+      // console.log(process.env.THEOAPI);
+      // Vue.axios.post(api, this.user).then(response => {
+      //   console.log(response.data);
+      // });
     }
   }
 };
