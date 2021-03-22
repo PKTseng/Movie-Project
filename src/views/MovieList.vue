@@ -92,21 +92,20 @@ export default {
     }
   },
   methods: {
-    getProducts: function () {
+    getProducts() {
       this.isLoading = true
-      // const api = '/data/api/v1/product'
-      const api = 'http://localhost:3000/products'
-      Vue.axios.get(api).then(response => {
-        // console.log(response.data.data)
-        // console.log(response)
-        // this.products = response.data.data
-        // this.renderProduct = response.data.data
-        this.products = response.data
-        this.renderProduct = response.data
-        this.getCategories()
-        this.getCategoryWithCount()
-        this.isLoading = false
-      })
+      fetch('http://7bcd8d479c82.ngrok.io/api/v1/product')
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          // console.log(response)
+          this.products = response.data
+          this.renderProduct = response.data
+          this.getCategories()
+          this.getCategoryWithCount()
+          this.isLoading = false
+        })
     },
     getCategories: function () {
       let categories = this.products.map(element => {
