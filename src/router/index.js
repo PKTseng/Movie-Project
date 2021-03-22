@@ -17,13 +17,6 @@ const routes = [
     path: '/home',
     component: Home,
     name: 'Home',
-    // children: [
-    //   {
-    //     path: 'movieInfo',
-    //     component: MovieInfo,
-    //     name: 'MovieInfo',
-    //   },
-    // ],
   },
   {
     path: '/movieInfo/:id',
