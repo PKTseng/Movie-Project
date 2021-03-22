@@ -1,8 +1,8 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <Header></Header>
-    <MovieBanner></MovieBanner>
+    <Navbar />
+    <MovieBanner />
     <!-- 下半部所有電影內容 -->
     <MovieList />
     <Footer />
@@ -11,8 +11,7 @@
 </template>
 
 <script>
-// import $ from 'jquery'
-import Header from '@/components/Navbar'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
@@ -23,21 +22,10 @@ export default {
   data() {
     return {
       isLoading: false,
-      status: {
-        addLoading: false,
-      },
-      products: [], // render
-      movieType: {
-        allMovie: null, // all movie
-        motion: [],
-        love: null,
-      },
-      rentInfo: {},
-      info: [],
     }
   },
   components: {
-    Header,
+    Navbar,
     Footer,
     MovieBanner,
     Cart,
