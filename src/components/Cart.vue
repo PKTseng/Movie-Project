@@ -58,9 +58,9 @@
             </tr>
           </tbody>
         </table>
-        <a href="./square.html" class="btn btn-outline-secondary btn-block">
-          <i class="fas fa-shopping-cart fa-lg"></i> 結帳去</a
-        >
+        <router-link to="/payment" class="btn btn-outline-secondary btn-block">
+          <i class="fas fa-shopping-cart fa-lg"></i> 結帳去
+        </router-link>
       </div>
     </div>
   </div>
