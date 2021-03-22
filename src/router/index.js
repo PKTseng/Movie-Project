@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 const Home = () => import('@/views/Home')
 const Favorite = () => import('@/views/Favorite')
 const MovieInfo = () => import('@/views/MovieInfo')
-const Checkout = () => import('@/views/Checkout')
+const Payment = () => import('@/views/Payment')
 
 Vue.use(VueRouter)
 
@@ -36,9 +36,9 @@ const routes = [
     name: 'Favorite',
   },
   {
-    path: '/checkout',
-    component: Checkout,
-    name: 'Checkout',
+    path: '/payment',
+    component: Payment,
+    name: 'Payment',
   },
 ]
 
