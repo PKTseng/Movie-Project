@@ -18,7 +18,7 @@
               <tr>
                 <td class="d-flex align-items-center">
                   <div class="priceMovie">
-                    <img src="./images/movie1.jpg" alt="" />
+                    <img src="@/assets/movies/movie1.jpg" alt="" />
                   </div>
                   <div class="flex-column px-3">
                     <h5>魔物獵人</h5>
@@ -36,7 +36,7 @@
               <tr>
                 <td class="d-flex align-items-center">
                   <div class="priceMovie">
-                    <img src="./images/movie2.jpg" alt="" />
+                    <img src="@/assets/movies/movie2.jpg" alt="" />
                   </div>
                   <div class="flex-column px-3">
                     <h5>白頭山：半島浩劫</h5>
