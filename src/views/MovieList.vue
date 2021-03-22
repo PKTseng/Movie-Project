@@ -14,7 +14,7 @@
             <a
               href="#"
               class="list-group-item list-group-item-action list-group-item-dark d-flex align-items-center"
-              v-for="item in categorys"
+              v-for="item in categories"
               @click.prevent="categoryItem(item)"
             >
               <i class="fas fa-film fa-2x videoIcon"></i>
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import MovieCard from '@/components/MovieCard/MovieCard'
+import MovieCard from '@/components/MovieCard'
 export default {
   name: 'MovieList',
   components: {
@@ -85,44 +85,42 @@ export default {
   data() {
     return {
       isLoading: false,
-      products: [], // render
-      sideBar: [],
+      products: [],
       categoryWithCount: {},
-      categorys: [],
+      categories: [],
       renderProduct: [],
     }
   },
   methods: {
     getProducts: function () {
       this.isLoading = true
-      const api = '/data/api/v1/product'
+      // const api = '/data/api/v1/product'
+      const api = 'http://localhost:3000/products'
       Vue.axios.get(api).then(response => {
         // console.log(response.data.data)
         // console.log(response)
-        this.products = response.data.data
-        this.renderProduct = response.data.data
-        this.getCategorys()
+        // this.products = response.data.data
+        // this.renderProduct = response.data.data
+        this.products = response.data
+        this.renderProduct = response.data
+        this.getCategories()
         this.getCategoryWithCount()
         this.isLoading = false
       })
     },
-    getCategorys: function () {
+    getCategories: function () {
       let categories = this.products.map(element => {
         return element.product_type
       })
-      this.categorys = categories.filter(
+      this.categories = categories.filter(
         (item, index) => categories.indexOf(item) === index
       )
     },
     getCategoryWithCount: function () {
       let count_hash = {}
-      // let  count_hash[item] = 0
-      // console.log(this.categorys)
-      for (const category of this.categorys) {
-        // console.log(item)
+      for (const category of this.categories) {
         this.products.forEach(element => {
           if (element.product_type === category) {
-            // count_hash[category] = 0
             if (typeof count_hash[category] === 'undefined') {
               count_hash[category] = 0
             }
@@ -130,11 +128,10 @@ export default {
           }
         })
       }
-      // console.log(count_hash)
       this.categoryWithCount = count_hash
     },
-    getCount: function (category) {
-      return this.categoryWithCount[category]
+    getCount: function (item) {
+      return this.categoryWithCount[item]
     },
     categoryItem: function (category) {
       this.renderProduct = this.products.filter(function (item) {
