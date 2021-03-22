@@ -32,12 +32,6 @@
                 <span class="ml-1"> 我的最愛</span>
               </router-link>
             </li>
-            <!-- <li class="nav-item">
-              <router-link class="nav-link navListLink" to="/login">
-                <span><i class="fas fa-user-circle"></i></span>
-                <span class="ml-1">後台管理</span>
-              </router-link>
-            </li> -->
           </ul>
         </div>
       </div>
@@ -47,13 +41,13 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   data() {
     return {
-      message: "Hello World"
-    };
-  }
-};
+      message: 'Hello World',
+    }
+  },
+}
 </script>
 
 <style scoped lang="scss">
