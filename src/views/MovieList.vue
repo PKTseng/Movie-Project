@@ -40,7 +40,7 @@
                     aria-label="Recipient's username"
                     aria-describedby="button-addon2"
                     v-model="searchText"
-                    @input="searchMsg()"
+                    @input="searchMsg(searchText)"
                   />
                   <div class="input-group-append">
                     <button
@@ -144,7 +144,6 @@ export default {
     },
     searchMsg: function (searchText) {
       searchText = this.searchText
-      // console.log(searchText)
       // console.log(this.products)
       // console.log(this.renderProduct)
       this.renderProduct = this.products.filter(
