@@ -144,12 +144,13 @@ export default {
     },
     searchMsg: function (searchText) {
       searchText = this.searchText
+      // console.log(searchText)
       // console.log(this.products)
       // console.log(this.renderProduct)
       this.renderProduct = this.products.filter(
-        item =>
-          // console.log(item)
-          item.product_name === searchText
+        // item => console.log(item)
+        // item => console.log(item.product_name)
+        item => item.product_name === searchText
       )
     },
   },
