@@ -39,12 +39,15 @@
                     placeholder="輸入關鍵字"
                     aria-label="Recipient's username"
                     aria-describedby="button-addon2"
+                    v-model="searchText"
+                    @input="searchMsg()"
                   />
                   <div class="input-group-append">
                     <button
                       class="btn btn-outline-secondary"
                       type="button"
                       id="button-addon2"
+                      @click="searchText = ''"
                     >
                       <i class="fas fa-times"></i>
                     </button>
@@ -89,11 +92,12 @@ export default {
       categoryWithCount: {},
       categories: [],
       renderProduct: [],
+      searchText: '',
     }
   },
   methods: {
-    getProducts() {
-      this.isLoading = true
+    getProducts: function () {
+      // this.isLoading = true
       fetch('http://7bcd8d479c82.ngrok.io/api/v1/product')
         .then(response => {
           return response.json()
@@ -104,7 +108,8 @@ export default {
           this.renderProduct = response.data
           this.getCategories()
           this.getCategoryWithCount()
-          this.isLoading = false
+          this.searchMsg()
+          // this.isLoading = false
         })
     },
     getCategories: function () {
@@ -133,9 +138,20 @@ export default {
       return this.categoryWithCount[item]
     },
     categoryItem: function (category) {
-      this.renderProduct = this.products.filter(function (item) {
-        return category === item.product_type
-      })
+      this.renderProduct = this.products.filter(
+        item => category === item.product_type
+      )
+    },
+    searchMsg: function (searchText) {
+      searchText = this.searchText
+      // console.log(searchText)
+      // console.log(this.products)
+      // console.log(this.renderProduct)
+      this.renderProduct = this.products.filter(
+        item =>
+          // console.log(item)
+          item.product_name === searchText
+      )
     },
   },
   mounted() {
