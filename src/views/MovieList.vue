@@ -31,7 +31,7 @@
           <div class="row">
             <div class="col-12 d-flex justify-content-between">
               <h1 class="text-white itemTitle">強檔院線</h1>
-              <form class="from-line my-lg-0">
+              <!-- <form class="from-line my-lg-0">
                 <div class="input-group mb-3">
                   <input
                     type="text"
@@ -40,7 +40,6 @@
                     aria-label="Recipient's username"
                     aria-describedby="button-addon2"
                     v-model="searchText"
-                    @input="searchMsg(searchText)"
                   />
                   <div class="input-group-append">
                     <button
@@ -53,7 +52,7 @@
                     </button>
                   </div>
                 </div>
-              </form>
+              </form> -->
             </div>
           </div>
           <!-- 所有電影類型 -->
@@ -97,7 +96,7 @@ export default {
   },
   methods: {
     getProducts: function () {
-      // this.isLoading = true
+      this.isLoading = true
       fetch('http://7bcd8d479c82.ngrok.io/api/v1/product')
         .then(response => {
           return response.json()
@@ -108,14 +107,15 @@ export default {
           this.renderProduct = response.data
           this.getCategories()
           this.getCategoryWithCount()
-          this.searchMsg()
-          // this.isLoading = false
+          this.isLoading = false
         })
     },
     getCategories: function () {
+      // categories 只放電影類型的陣列
       let categories = this.products.map(element => {
         return element.product_type
       })
+      // 過濾掉 categories 陣列內重複的電影類型
       this.categories = categories.filter(
         (item, index) => categories.indexOf(item) === index
       )
@@ -123,7 +123,9 @@ export default {
     getCategoryWithCount: function () {
       let count_hash = {}
       for (const category of this.categories) {
+        // category指向單個電影類型
         this.products.forEach(element => {
+          // 用單個電影類型跟陣列內的電影類型比對
           if (element.product_type === category) {
             if (typeof count_hash[category] === 'undefined') {
               count_hash[category] = 0
@@ -134,26 +136,27 @@ export default {
       }
       this.categoryWithCount = count_hash
     },
+    // 顯示 sidebar 類型數量
     getCount: function (item) {
       return this.categoryWithCount[item]
     },
+    // 透過 sidebar 塞選電影類型
     categoryItem: function (category) {
       this.renderProduct = this.products.filter(
         item => category === item.product_type
       )
     },
-    searchMsg: function (searchText) {
-      searchText = this.searchText
-      // console.log(searchText)
-      // console.log(this.products)
-      // console.log(this.renderProduct)
-      this.renderProduct = this.products.filter(
-        // item => console.log(item)
-        // item => console.log(item.product_name)
-        item => item.product_name === searchText
-      )
-    },
   },
+  // 文字過濾塞選功能
+  // compted: {
+  //   renderProductFilter() {
+  //     if (this.searchText) {
+  //       return this.renderProduct.filter(item =>
+  //         item.product_name.includes(this.searchText)
+  //       )
+  //     }
+  //   },
+  // },
   mounted() {
     this.getProducts()
   },
