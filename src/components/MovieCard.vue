@@ -22,20 +22,19 @@
     <div class="card-body d-flex justify-content-between align-items-center">
       <h4 class="m-0 movieName">{{ item.product_name }}</h4>
     </div>
-    <div class="px-2 d-flex flex-column border-white">
-      <button class="btn btn-outline-light btn-sm mb-2 px-2">
+    <div class="px-2 flex-column d-flex border-white mobileBtn">
+      <button class="btn btn-outline-light mb-2 px-2">
         <i class="fas fa-heart px-2"></i>
-        加入我的最愛
+        <span>加入我的最愛</span>
       </button>
 
       <button
-        class="btn btn-outline-danger btn-sm mb-2"
+        class="btn btn-outline-danger mb-2"
         @click="addCart(item.product_id)"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
         <i class="fas fa-cart-plus px-2"></i>
-        {{ item.product_id }}
-        我要購買
+        <span>我要購買</span>
       </button>
     </div>
   </div>
