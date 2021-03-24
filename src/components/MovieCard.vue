@@ -28,7 +28,10 @@
         加入我的最愛
       </button>
 
-      <button class="btn btn-outline-danger btn-sm mb-2">
+      <button
+        class="btn btn-outline-danger btn-sm mb-2"
+        @click="addCart(item.id)"
+      >
         <i class="fas fa-cart-plus px-2"></i>
         <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
         我要購買
@@ -49,6 +52,42 @@ export default {
   },
   props: {
     item: {},
+  },
+  methods: {
+    addCart(id, qty = 1) {
+      this.status.addLoading = true
+      const addCartApi = 'http://7bcd8d479c82.ngrok.io/api/v1/cart'
+      fetch(addCartApi, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+          qty,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          this.getCart(cart_id)
+          this.status.addLoading = false
+          // this.getCart()
+        })
+    },
+    getCart(cart_id) {
+      const getCartApi = `http://7bcd8d479c82.ngrok.io/api/v1/cart/${cart_id}`
+      fetch(getCartApi)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (myJson) {
+          console.log(myJson)
+        })
+    },
   },
 }
 </script>
