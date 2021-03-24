@@ -167,6 +167,13 @@ export default {
 .cardList {
   margin-bottom: 100px;
 }
+
+.itemTitle {
+  @media (max-width: 1024px) {
+    margin-top: 50px;
+  }
+}
+
 .movieName {
   font-weight: 600;
 }
