@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top p-0">
       <div class="container">
         <router-link to="/Home">
-          <img src="@/assets/logo.png" alt="" class="logo" />
+          <img src="@/assets/logo1.png" alt="" class="logo" />
         </router-link>
         <!-- <a class="navbar-brand" href="./index.html"></a> -->
         <button
