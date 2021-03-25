@@ -23,9 +23,13 @@
       <h4 class="m-0 movieName">{{ item.product_name }}</h4>
     </div>
     <div class="px-2 flex-column d-flex border-white mobileBtn">
-      <button class="btn btn-outline-light mb-2 px-2">
+      <button
+        class="btn btn-outline-light mb-2 px-2"
+        @click="addFavorite(item.product_id)"
+      >
+        <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
         <i class="fas fa-heart px-2"></i>
-        <span>加入我的最愛</span>
+        <span>{{ item.product_id }}加入我的最愛</span>
       </button>
 
       <button
@@ -66,6 +70,28 @@ export default {
         body: JSON.stringify({
           id,
           qty,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          this.status.addLoading = false
+        })
+    },
+    addFavorite(id) {
+      this.status.addLoading = true
+      const addFavoriteApi = `http://7bcd8d479c82.ngrok.io/api/v1/product/${id}/favorite`
+      fetch(addFavoriteApi, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+          message: 'Success to add a new collect',
         }),
       })
         .then(response => {
