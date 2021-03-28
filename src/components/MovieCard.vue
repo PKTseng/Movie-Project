@@ -59,8 +59,10 @@ export default {
   },
   methods: {
     addCart(id, qty = 1) {
-      this.status.addLoading = true
-      const addCartApi = 'http://7bcd8d479c82.ngrok.io/api/v1/cart'
+      // this.status.addLoading = true
+      // const addCartApi = 'http://7bcd8d479c82.ngrok.io/api/v1/cart'
+      const addCartApi = `${process.env.USERAPI}/api/v1/cart`
+      // const addCartApi = 'http://4752c4af1d34.ngrok.io/api/v1/cart'
       fetch(addCartApi, {
         method: 'post',
         headers: {
@@ -68,8 +70,8 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id,
-          qty,
+          product_id: id,
+          product_qty: qty,
         }),
       })
         .then(response => {
@@ -77,12 +79,13 @@ export default {
         })
         .then(response => {
           console.log(response)
-          this.status.addLoading = false
+          // this.status.addLoading = false
         })
     },
     addFavorite(id) {
-      this.status.addLoading = true
-      const addFavoriteApi = `http://7bcd8d479c82.ngrok.io/api/v1/product/${id}/favorite`
+      // this.status.addLoading = true
+      // const addFavoriteApi = `http://4752c4af1d34.ngrok.io/api/v1/favorite`
+      const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
       fetch(addFavoriteApi, {
         method: 'post',
         headers: {
@@ -91,7 +94,6 @@ export default {
         },
         body: JSON.stringify({
           product_id: id,
-          message: 'Success to add a new collect',
         }),
       })
         .then(response => {
@@ -99,7 +101,7 @@ export default {
         })
         .then(response => {
           console.log(response)
-          this.status.addLoading = false
+          // this.status.addLoading = false
         })
     },
   },
