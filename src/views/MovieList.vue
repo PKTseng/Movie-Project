@@ -97,9 +97,6 @@ export default {
   methods: {
     getProducts: function () {
       this.isLoading = true
-      // console.log(process.env.USERAPI)
-      // fetch('http://7bcd8d479c82.ngrok.io/api/v1/product')
-      // fetch('http://4752c4af1d34.ngrok.io/api/v1/product')
       fetch(`${process.env.USERAPI}/api/v1/product`)
         .then(response => {
           return response.json()
