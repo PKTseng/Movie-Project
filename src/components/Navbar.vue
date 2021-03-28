@@ -29,7 +29,7 @@
             <li class="nav-item">
               <router-link class="nav-link navListLink" to="/favorite">
                 <span><i class="far fa-heart"></i></span>
-                <span class="ml-1"> 我的最愛</span>
+                <span class="ml-1">我的最愛</span>
               </router-link>
             </li>
           </ul>
