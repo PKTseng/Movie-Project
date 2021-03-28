@@ -95,7 +95,7 @@ export default {
     }
   },
   methods: {
-    getProducts: function () {
+    getProducts() {
       this.isLoading = true
       fetch(`${process.env.USERAPI}/api/v1/product`)
         .then(response => {
@@ -110,7 +110,7 @@ export default {
           this.isLoading = false
         })
     },
-    getCategories: function () {
+    getCategories() {
       // categories 只放電影類型的陣列
       let categories = this.products.map(element => {
         return element.product_type
@@ -120,7 +120,7 @@ export default {
         (item, index) => categories.indexOf(item) === index
       )
     },
-    getCategoryWithCount: function () {
+    getCategoryWithCount() {
       let count_hash = {}
       for (const category of this.categories) {
         // category指向單個電影類型
@@ -137,11 +137,11 @@ export default {
       this.categoryWithCount = count_hash
     },
     // 顯示 sidebar 類型數量
-    getCount: function (item) {
+    getCount(item) {
       return this.categoryWithCount[item]
     },
     // 透過 sidebar 塞選電影類型
-    categoryItem: function (category) {
+    categoryItem(category) {
       this.renderProduct = this.products.filter(
         item => category === item.product_type
       )
