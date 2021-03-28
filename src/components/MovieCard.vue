@@ -29,7 +29,7 @@
       >
         <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
         <i class="fas fa-heart px-2"></i>
-        <span>{{ item.product_id }}加入我的最愛</span>
+        <span>加入我的最愛</span>
       </button>
 
       <button
@@ -60,9 +60,7 @@ export default {
   methods: {
     addCart(id, qty = 1) {
       // this.status.addLoading = true
-      // const addCartApi = 'http://7bcd8d479c82.ngrok.io/api/v1/cart'
       const addCartApi = `${process.env.USERAPI}/api/v1/cart`
-      // const addCartApi = 'http://4752c4af1d34.ngrok.io/api/v1/cart'
       fetch(addCartApi, {
         method: 'post',
         headers: {
@@ -84,7 +82,6 @@ export default {
     },
     addFavorite(id) {
       // this.status.addLoading = true
-      // const addFavoriteApi = `http://4752c4af1d34.ngrok.io/api/v1/favorite`
       const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
       fetch(addFavoriteApi, {
         method: 'post',
@@ -105,6 +102,7 @@ export default {
         })
     },
   },
+  computed: {},
 }
 </script>
 
