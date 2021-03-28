@@ -7,9 +7,14 @@
         class="btn btnCart text-white"
         data-toggle="modal"
         data-target="#exampleModal"
+        @click="showCart"
       >
         <i class="fas fa-cart-arrow-down fa-3x"></i>
-        <span class="badge badge-pill badge-danger">2</span>
+        <span
+          class="badge badge-pill badge-danger"
+          v-if="movieCartItem.length"
+          >{{ movieCartItem.length }}</span
+        >
       </button>
     </div>
 
@@ -47,16 +52,19 @@
                   <th scope="col">單價</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody v-for="item in movieCartItem" :key="item.id">
                 <tr>
                   <th scope="row">
-                    <button class="btn btn-sm btn-outline-danger">
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      @click="deleteCart(item.product_id)"
+                    >
                       <i class="far fa-trash-alt"></i>
                     </button>
                   </th>
-                  <td>魔物獵人</td>
-                  <td>1/部</td>
-                  <td class="text-right">$1000</td>
+                  <td>{{ item.product_name }}</td>
+                  <td>{{ item.product_qty }}/部</td>
+                  <td class="text-right">${{ item.product_total_price }}</td>
                 </tr>
               </tbody>
             </table>
@@ -80,6 +88,44 @@
 <script>
 export default {
   name: 'Cart',
+  data() {
+    return {
+      movieCartItem: [],
+    }
+  },
+  methods: {
+    showCart() {
+      const addCartApi = `${process.env.USERAPI}/api/v1/cart`
+      fetch(addCartApi)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          // console.log(response)
+          // console.log(response.data)
+          this.movieCartItem = response.data
+        })
+    },
+    deleteCart(id) {
+      const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
+      fetch(deleteCartApi, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+        })
+    },
+  },
 }
 </script>
 
