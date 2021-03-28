@@ -64,11 +64,13 @@ export default {
           return response.json()
         })
         .then(response => {
+          console.log(response)
           this.products = response.data
           this.isLoading = false
         })
     },
     removeFavorite(id) {
+      this.isLoading = true
       const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
       fetch(removeFavorite, {
         method: 'DELETE',
@@ -85,6 +87,7 @@ export default {
         })
         .then(response => {
           console.log(response)
+          this.getFavorite()
         })
     },
   },
