@@ -5,6 +5,7 @@ const Home = () => import('@/views/Home')
 const Favorite = () => import('@/views/Favorite')
 const MovieInfo = () => import('@/views/MovieInfo')
 const Payment = () => import('@/views/Payment')
+const PayInfo = () => import('@/views/PayInfo')
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes = [
     path: '/payment',
     component: Payment,
     name: 'Payment',
+  },
+  {
+    path: '/payInfo',
+    component: PayInfo,
+    name: 'PayInfo',
   },
 ]
 
