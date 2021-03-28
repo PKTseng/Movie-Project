@@ -6,7 +6,7 @@
         type="button"
         class="btn btnCart text-white"
         data-toggle="modal"
-        data-target="#exampleModal"
+        data-target="#cartModal"
         @click="showCart"
       >
         <i class="fas fa-cart-arrow-down fa-3x"></i>
@@ -17,7 +17,7 @@
     <!-- Modal <!-- 購物車表格 -->-->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="cartModal"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -83,7 +83,9 @@
             >
               再看一下
             </button>
-            <button type="button" class="btn btn-outline-danger">結帳去</button>
+            <button @click.prevent="goShopping" class="btn btn-outline-danger">
+              前往購物商城
+            </button>
           </div>
         </div>
       </div>
@@ -92,6 +94,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   name: 'Cart',
   data() {
@@ -131,6 +134,11 @@ export default {
         .then(response => {
           console.log(response)
         })
+    },
+    goShopping() {
+      $('#cartModal').modal('hide')
+      const path = '/payment'
+      this.$router.push(path)
     },
   },
 }
