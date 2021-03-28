@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- Button trigger modal -->
+    <loading :active.sync="isLoading"></loading>
     <div class="cart">
       <button
         type="button"
@@ -10,7 +11,9 @@
         @click="showCart"
       >
         <i class="fas fa-cart-arrow-down fa-3x"></i>
-        <span class="badge badge-pill badge-danger">2</span>
+        <span class="badge badge-pill badge-danger" v-if="carts.length">{{
+          carts.length
+        }}</span>
       </button>
     </div>
 
@@ -99,6 +102,7 @@ export default {
   name: 'Cart',
   data() {
     return {
+      isLoading: false,
       totalPrice: '',
       carts: [],
     }
@@ -114,9 +118,11 @@ export default {
           // console.log(response)
           this.carts = response.data
           this.totalPrice = response.total_price
+          this.isLoading = false
         })
     },
     deleteCart(id) {
+      this.isLoading = true
       const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(deleteCartApi, {
         method: 'DELETE',
@@ -133,6 +139,7 @@ export default {
         })
         .then(response => {
           console.log(response)
+          this.showCart()
         })
     },
     goShopping() {
@@ -140,6 +147,9 @@ export default {
       const path = '/payment'
       this.$router.push(path)
     },
+  },
+  mounted() {
+    this.showCart()
   },
 }
 </script>
