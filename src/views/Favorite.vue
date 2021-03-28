@@ -17,10 +17,13 @@
             >
               <h4 class="m-0 movieName">{{ item.product_name }}</h4>
             </div>
-            <div class="px-2 d-flex flex-column border-white">
+            <div
+              class="px-2 d-flex flex-column border-white"
+              @click="removeFavorite(item.product_id)"
+            >
               <button class="btn btn-outline-light btn-sm mb-2 py-2">
                 <i class="fas fa-heart px-2"></i>
-                加入我的最愛
+                從我的最愛移除
               </button>
 
               <button class="btn btn-outline-danger btn-sm mb-2 py-2">
@@ -63,6 +66,25 @@ export default {
         .then(response => {
           this.products = response.data
           this.isLoading = false
+        })
+    },
+    removeFavorite(id) {
+      const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(removeFavorite, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
         })
     },
   },
