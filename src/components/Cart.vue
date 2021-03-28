@@ -10,11 +10,7 @@
         @click="showCart"
       >
         <i class="fas fa-cart-arrow-down fa-3x"></i>
-        <span
-          class="badge badge-pill badge-danger"
-          v-if="movieCartItem.length"
-          >{{ movieCartItem.length }}</span
-        >
+        <span class="badge badge-pill badge-danger">2</span>
       </button>
     </div>
 
@@ -52,7 +48,7 @@
                   <th scope="col">單價</th>
                 </tr>
               </thead>
-              <tbody v-for="item in movieCartItem" :key="item.id">
+              <tbody v-for="item in carts" :key="item.id">
                 <tr>
                   <th scope="row">
                     <button
@@ -63,10 +59,20 @@
                     </button>
                   </th>
                   <td>{{ item.product_name }}</td>
-                  <td>{{ item.product_qty }}/部</td>
-                  <td class="text-right">${{ item.product_total_price }}</td>
+                  <td class="text-right">{{ item.product_qty }}/部</td>
+                  <td class="text-right">
+                    {{ item.product_total_price | currency }}
+                  </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right">總金額</td>
+                  <td class="text-right">{{ totalPrice | currency }}</td>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <div class="modal-footer">
@@ -90,7 +96,8 @@ export default {
   name: 'Cart',
   data() {
     return {
-      movieCartItem: [],
+      totalPrice: '',
+      carts: [],
     }
   },
   methods: {
@@ -102,8 +109,8 @@ export default {
         })
         .then(response => {
           // console.log(response)
-          // console.log(response.data)
-          this.movieCartItem = response.data
+          this.carts = response.data
+          this.totalPrice = response.total_price
         })
     },
     deleteCart(id) {
