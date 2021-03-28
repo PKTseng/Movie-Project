@@ -82,7 +82,8 @@ export default {
     },
     addFavorite(id) {
       // this.status.addLoading = true
-      const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      // const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      const addFavoriteApi = `http://bfe38a9329fe.ngrok.io/api/v1/favorite`
       fetch(addFavoriteApi, {
         method: 'post',
         headers: {
@@ -102,7 +103,6 @@ export default {
         })
     },
   },
-  computed: {},
 }
 </script>
 
