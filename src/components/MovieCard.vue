@@ -27,7 +27,7 @@
         class="btn btn-outline-light mb-2 px-2"
         @click="addFavorite(item.product_id)"
       >
-        <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
+        <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
         <i class="fas fa-heart px-2"></i>
         <span>加入我的最愛</span>
       </button>
@@ -51,6 +51,7 @@ export default {
     return {
       status: {
         addLoading: false,
+        favoriteLoading: false,
       },
     }
   },
@@ -59,7 +60,7 @@ export default {
   },
   methods: {
     addCart(id, qty = 1) {
-      // this.status.addLoading = true
+      this.status.addLoading = true
       const addCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(addCartApi, {
         method: 'post',
@@ -77,13 +78,12 @@ export default {
         })
         .then(response => {
           console.log(response)
-          // this.status.addLoading = false
+          this.status.addLoading = false
         })
     },
     addFavorite(id) {
-      // this.status.addLoading = true
-      // const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
-      const addFavoriteApi = `http://bfe38a9329fe.ngrok.io/api/v1/favorite`
+      this.status.favoriteLoading = true
+      const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
       fetch(addFavoriteApi, {
         method: 'post',
         headers: {
@@ -99,7 +99,7 @@ export default {
         })
         .then(response => {
           console.log(response)
-          // this.status.addLoading = false
+          this.status.favoriteLoading = false
         })
     },
   },
