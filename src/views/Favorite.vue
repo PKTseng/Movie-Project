@@ -55,7 +55,8 @@ export default {
   methods: {
     getFavorite() {
       this.isLoading = true
-      fetch('http://7bcd8d479c82.ngrok.io/api/v1/product')
+      const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(favoriteApi)
         .then(response => {
           return response.json()
         })
