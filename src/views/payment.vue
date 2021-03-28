@@ -45,7 +45,6 @@
             <tfoot>
               <tr>
                 <td></td>
-                <td></td>
                 <td class="text-right">總金額</td>
                 <td class="text-right">{{ totalPrice | currency }}</td>
                 <td></td>
@@ -158,6 +157,7 @@ export default {
         })
     },
     deleteCart(id) {
+      this.isLoading = true
       const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(deleteCartApi, {
         method: 'DELETE',
@@ -174,6 +174,7 @@ export default {
         })
         .then(response => {
           console.log(response)
+          this.getCartInfo()
         })
     },
   },
