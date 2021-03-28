@@ -49,6 +49,14 @@
                 <td class="text-right">{{ totalPrice | currency }}</td>
                 <td></td>
               </tr>
+              <!-- <tr v-if="item.product_total_price !== item.product_total_price">
+                <td></td>
+                <td class="text-right text-success">折扣價</td>
+                <td class="text-right text-success">
+                  {{ item.product_total_price | currency }}
+                </td>
+                <td></td>
+              </tr> -->
             </tfoot>
           </table>
         </div>
@@ -66,6 +74,7 @@
                 class="btn btn-outline-danger"
                 type="button"
                 id="button-addon2"
+                @click="addCouponCode"
               >
                 套用優惠碼
               </button>
@@ -114,7 +123,12 @@
               ></textarea>
             </div>
             <div class="text-right">
-              <button class="btn btn-outline-danger orderBtn">送出訂單</button>
+              <button
+                class="btn btn-outline-danger orderBtn"
+                @click="checkPay()"
+              >
+                送出訂單
+              </button>
             </div>
           </form>
         </div>
@@ -141,6 +155,7 @@ export default {
     Footer,
   },
   methods: {
+    //進入網頁拿取資料
     getCartInfo() {
       this.isLoading = true
       const finalPay = `${process.env.USERAPI}/api/v1/cart`
@@ -156,6 +171,7 @@ export default {
           this.isLoading = false
         })
     },
+    //刪除產品
     deleteCart(id) {
       this.isLoading = true
       const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
@@ -175,6 +191,43 @@ export default {
         .then(response => {
           console.log(response)
           this.getCartInfo()
+        })
+    },
+    //確認付款
+    checkPay() {
+      this.isLoading = true
+      const checkPayApi = `${process.env.USERAPI}/api/v1/order`
+      fetch(checkPayApi, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          order_id: '',
+          order_date: '',
+          message: 'Success',
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          this.getCartInfo()
+        })
+    },
+    //套用優惠券
+    addCouponCode() {
+      const couponApi = `${process.env.USERAPI}/api/v1/coupon/test`
+      fetch(couponApi)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          if (response) {
+          }
         })
     },
   },
