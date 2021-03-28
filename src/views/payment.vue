@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <Navbar />
     <!-- 中間購物清單 -->
     <section class="container mt-5">
@@ -13,33 +14,43 @@
               <th class="align-middle">售價</th>
               <th class="align-middle"></th>
             </thead>
-            <tbody>
+            <tbody v-for="item in cartItem" :key="item.id">
               <tr></tr>
               <tr>
                 <td class="d-flex align-items-center">
                   <div class="priceMovie">
-                    <img src="@/assets/movies/movie1.jpg" alt="" />
+                    <img :src="item.image_url" alt="" />
                   </div>
                   <div class="flex-column px-3">
-                    <h5>魔物獵人</h5>
-                    <span class="badge badge-warning">冒險</span>
+                    <h5>{{ item.product_name }}</h5>
+                    <span class="badge badge-warning">{{
+                      item.product_type
+                    }}</span>
                   </div>
                 </td>
-                <td class="align-middle">1/部</td>
-                <td class="align-middle text-right">$ 200</td>
+                <td class="align-middle">{{ item.product_qty }}/部</td>
                 <td class="align-middle text-right">
-                  <button class="btn btn-outline-danger btn-sm">
+                  {{ item.product_total_price | currency }}
+                </td>
+                <td class="align-middle text-right">
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    @click="deleteCart(item.product_id)"
+                  >
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </td>
               </tr>
+            </tbody>
+            <tfoot>
               <tr>
                 <td></td>
-                <td class="align-middle text-right">總價</td>
-                <td class="align-middle text-right">$1000</td>
+                <td></td>
+                <td class="text-right">總金額</td>
+                <td class="text-right">{{ totalPrice | currency }}</td>
                 <td></td>
               </tr>
-            </tbody>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -119,9 +130,55 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 export default {
   name: 'Checkout',
+  data() {
+    return {
+      isLoading: false,
+      cartItem: [],
+      totalPrice: '',
+    }
+  },
   components: {
     Navbar,
     Footer,
+  },
+  methods: {
+    getCartInfo() {
+      this.isLoading = true
+      const finalPay = `${process.env.USERAPI}/api/v1/cart`
+      fetch(finalPay)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          // console.log(response.total_price)
+          this.cartItem = response.data
+          this.totalPrice = response.total_price
+          this.isLoading = false
+        })
+    },
+    deleteCart(id) {
+      const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
+      fetch(deleteCartApi, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+        })
+    },
+  },
+  mounted() {
+    this.getCartInfo()
   },
 }
 </script>
