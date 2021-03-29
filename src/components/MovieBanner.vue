@@ -179,18 +179,18 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 export default {
-  name: "MovieBanner",
+  name: 'MovieBanner',
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
 
   mounted() {
-    const galleryThumbs = new Swiper(".gallery-thumbs", {
+    const galleryThumbs = new Swiper('.gallery-thumbs', {
       spaceBetween: 10,
       slidesPerView: 4,
       loop: true,
@@ -198,31 +198,31 @@ export default {
       loopedSlides: 10, //looped slides should be the same
       watchSlidesVisibility: true,
       watchSlidesProgress: true,
-      speed: 1000
+      speed: 1000,
       // autoplay: {
-      //   delay: 2000,
+      //   delay: 2500,
       //   disableOnInteraction: true,
       // },
-    });
-    const galleryTop = new Swiper(".gallery-top", {
+    })
+    const galleryTop = new Swiper('.gallery-top', {
       spaceBetween: 10,
       loop: true,
       loopedSlides: 10, //looped slides should be the same
       speed: 1000,
       // autoplay: {
-      //   delay: 2000,
+      //   delay: 2500,
       //   disableOnInteraction: true,
       // },
       navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
       thumbs: {
-        swiper: galleryThumbs
-      }
-    });
-  }
-};
+        swiper: galleryThumbs,
+      },
+    })
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -247,34 +247,34 @@ export default {
     }
   }
   .banner1 {
-    background-image: url("../assets/banner/banner1.jpg");
+    background-image: url('../assets/banner/banner1.jpg');
   }
   .banner2 {
-    background-image: url("../assets/banner/banner2.jpg");
+    background-image: url('../assets/banner/banner2.jpg');
   }
   .banner3 {
-    background-image: url("../assets/banner/banner3.jpg");
+    background-image: url('../assets/banner/banner3.jpg');
   }
   .banner4 {
-    background-image: url("../assets/banner/banner4.jpg");
+    background-image: url('../assets/banner/banner4.jpg');
   }
   .banner5 {
-    background-image: url("../assets/banner/banner5.jpg");
+    background-image: url('../assets/banner/banner5.jpg');
   }
   .banner6 {
-    background-image: url("../assets/banner/banner6.jpg");
+    background-image: url('../assets/banner/banner6.jpg');
   }
   .banner7 {
-    background-image: url("../assets/banner/banner7.jpg");
+    background-image: url('../assets/banner/banner7.jpg');
   }
   .banner8 {
-    background-image: url("../assets/banner/banner8.jpg");
+    background-image: url('../assets/banner/banner8.jpg');
   }
   .banner9 {
-    background-image: url("../assets/banner/banner9.jpg");
+    background-image: url('../assets/banner/banner9.jpg');
   }
   .banner10 {
-    background-image: url("../assets/banner/banner10.jpg");
+    background-image: url('../assets/banner/banner10.jpg');
   }
 }
 
