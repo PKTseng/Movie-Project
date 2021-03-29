@@ -48,7 +48,7 @@
                 </td>
               </tr>
             </tbody>
-            <tfoot>
+            <tfoot class="cartFoot">
               <tr>
                 <td></td>
                 <td class="text-right">總金額</td>
@@ -59,11 +59,18 @@
               </tr>
               <tr v-if="coupon">
                 <td></td>
-                <td class="text-right text-success">已套用優惠碼</td>
+                <td class="text-right text-success coupon">使用優惠碼</td>
                 <td class="text-right text-success">
                   {{ cartItem.final_price | currency }}
                 </td>
-                <td></td>
+                <td class="align-middle text-right">
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    @click="removeCoupon"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </td>
               </tr>
             </tfoot>
           </table>
@@ -155,7 +162,6 @@ export default {
       isLoading: false,
       cartItem: {
         data: [],
-        discount_price: '', //打折金額
         final_price: '', //打折後扣掉的金額
         totalPrice: '', //尚未打折金額
       },
@@ -176,7 +182,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
+          // console.log(response)
           // console.log(response.data)
           this.cartItem = response
           this.totalPrice = response.total_price
@@ -226,17 +232,35 @@ export default {
           if (code === 'test') {
             if (code === this.couponCode) {
               this.coupon = response.enabled
-              console.log('輸入正確')
             } else {
-              this.coupon = false
-              console.log('第二層判斷，確認 code 跟 couponCod 沒有一致')
+              response.enabled = false
             }
           } else {
-            this.coupon = false
-            console.log('第一層判斷，確認 code 錯誤')
+            response.enabled = false
           }
           console.log(response)
           // this.coupon = response.enabled
+        })
+    },
+    removeCoupon() {
+      const removeCouponApi = `${process.env.USERAPI}/api/v1/coupon`
+      fetch(removeCouponApi, {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          enabled: false,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          this.coupon = false
+          this.getCartInfo()
         })
     },
     //確認付款
@@ -316,5 +340,11 @@ label {
 }
 .orderBtn {
   margin-bottom: 200px;
+}
+
+.cartFoot {
+  td {
+    font-size: 20px;
+  }
 }
 </style>
