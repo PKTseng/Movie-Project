@@ -60,7 +60,7 @@
 
 次作品參考自六角學院 Vue 作品強的周末電影院
 
-- [原作周末電影院連結](https://gx7879.github.io/vue-dashboard-demo/dist/#/)
+- 原作周末電影院[連結](https://gx7879.github.io/vue-dashboard-demo/dist/#/)
 - [TMDB](https://www.themoviedb.org/?language=zh-TW)
 
 ## 聲明
