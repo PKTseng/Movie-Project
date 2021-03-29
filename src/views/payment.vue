@@ -30,6 +30,9 @@
                     <span class="badge badge-warning movieType">{{
                       item.product_type
                     }}</span>
+                    <span class="text-success couponText" v-if="coupon"
+                      >已套用優惠券</span
+                    >
                   </div>
                 </td>
                 <td class="align-middle text-right">
@@ -105,7 +108,7 @@
       <h2 class="text-white text-center">使用者訂購資訊</h2>
       <div class="row justify-content-center">
         <div class="col-md-10 col-sm-12">
-          <form class="text-white">
+          <form class="text-white" @submit.prevent="createOrder">
             <div class="form-group">
               <label for="userEmail">Email : </label>
               <input
@@ -139,9 +142,7 @@
               ></textarea>
             </div>
             <div class="text-right">
-              <button class="btn btn-success orderBtn" @click="checkPay()">
-                送出訂單
-              </button>
+              <button class="btn btn-success orderBtn">送出訂單</button>
             </div>
           </form>
         </div>
@@ -242,6 +243,7 @@ export default {
           // this.coupon = response.enabled
         })
     },
+    //移除優惠券效果
     removeCoupon() {
       const removeCouponApi = `${process.env.USERAPI}/api/v1/coupon`
       fetch(removeCouponApi, {
@@ -264,7 +266,7 @@ export default {
         })
     },
     //確認付款
-    checkPay() {
+    createOrder() {
       this.isLoading = true
       const checkPayApi = `${process.env.USERAPI}/api/v1/order`
       fetch(checkPayApi, {
@@ -284,6 +286,8 @@ export default {
         })
         .then(response => {
           console.log(response)
+          const path = '/payInfo'
+          this.$router.push(path)
           this.getCartInfo()
         })
     },
@@ -346,5 +350,8 @@ label {
   td {
     font-size: 20px;
   }
+}
+.couponText {
+  font-size: 16px;
 }
 </style>
