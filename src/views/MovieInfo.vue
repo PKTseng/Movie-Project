@@ -3,10 +3,10 @@
     <Navbar />
     <section class="container mt-5">
       <div class="row text-white">
-        <div class="col-md-5 d-flex justify-content-center">
+        <div class="col-md-6 d-flex justify-content-center">
           <img :src="movieInfo.img" alt="" class="movieImg" />
         </div>
-        <div class="col-md-5 d-flex flex-column justify-content-lg-between">
+        <div class="col-md-6 d-flex flex-column justify-content-lg-between">
           <div class="movieInfo">
             <h2 class="d-flex align-items-center">
               {{ movieInfo.name }}
@@ -81,9 +81,6 @@ export default {
     Footer,
     Cart,
   },
-  // mounted() {
-  //   this.movieName = this.$route.params.id
-  // },
 }
 </script>
 
