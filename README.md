@@ -52,15 +52,16 @@
 
 ![](https://i.imgur.com/TsYlQ5V.jpg)
 
-### 購物車
+### 購物車結帳頁面
 
 ![](https://i.imgur.com/wFlJ8tY.png)
 
 ## 內容來源 & 圖片來源
 
 次作品參考自六角學院 Vue 作品強的周末電影院
-[原作周末電影院連結](https://gx7879.github.io/vue-dashboard-demo/dist/#/)
-[TMDB](https://www.themoviedb.org/?language=zh-TW)
+
+- [原作周末電影院連結](https://gx7879.github.io/vue-dashboard-demo/dist/#/)
+- [TMDB](https://www.themoviedb.org/?language=zh-TW)
 
 ## 聲明
 
