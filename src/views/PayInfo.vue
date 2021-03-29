@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <section class="container mt-5">
       <h1 class="text-center text-white my-4">購物清單</h1>
       <div class="row justify-content-center">
@@ -11,7 +12,7 @@
               <th class="align-middle">售價</th>
               <th class="align-middle"></th>
             </thead>
-            <tbody v-for="item in cartItem" :key="item.id">
+            <tbody v-for="item in orderList.data" :key="item.id">
               <tr></tr>
               <tr>
                 <td class="d-flex align-items-center">
@@ -29,45 +30,18 @@
                 <td class="align-middle text-right">
                   {{ item.product_total_price | currency }}
                 </td>
-                <td class="align-middle text-right">
-                  <button
-                    class="btn btn-outline-danger btn-sm"
-                    @click="deleteCart(item.product_id)"
-                  >
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                </td>
+                <td></td>
               </tr>
             </tbody>
-            <tfoot>
+            <!-- <tfoot>
               <tr>
                 <td></td>
                 <td class="text-right">總金額</td>
                 <td class="text-right">{{ totalPrice | currency }}</td>
                 <td></td>
               </tr>
-            </tfoot>
+            </tfoot> -->
           </table>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-10">
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="請輸入優惠碼"
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-danger"
-                type="button"
-                id="button-addon2"
-              >
-                套用優惠碼
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -79,11 +53,16 @@ export default {
   name: 'payInfo',
   data() {
     return {
-      userCartInfo: [],
+      isLoading: '',
+      orderList: {
+        data: [],
+        total_count: '',
+        current_count: '',
+      },
     }
   },
   methods: {
-    userCartInfo() {
+    getOrder() {
       this.isLoading = true
       const userCartPay = `${process.env.USERAPI}/api/v1/order`
       fetch(userCartPay)
@@ -92,13 +71,13 @@ export default {
         })
         .then(response => {
           console.log(response)
-          this.userCartInfo = response.data
+          this.orderList = response
           this.isLoading = false
         })
     },
   },
   mounted() {
-    this.userCartInfo
+    this.getOrder()
   },
 }
 </script>
