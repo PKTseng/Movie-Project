@@ -6,30 +6,32 @@
     <section class="container mt-5">
       <h1 class="text-center text-white my-4">購物清單</h1>
       <div class="row justify-content-center">
-        <div class="col-10">
-          <table class="table text-white">
-            <thead>
-              <th class="align-middle">電影名稱</th>
-              <th class="align-middle">數量</th>
-              <th class="align-middle">售價</th>
-              <th class="align-middle"></th>
+        <div class="col-md-10 col-12">
+          <table class="table text-white movieCart">
+            <thead class="cartTitle">
+              <th class="align-middle">選購電影</th>
+              <th class="align-middle text-right">數量</th>
+              <th class="align-middle text-right">售價</th>
+              <th></th>
             </thead>
-            <tbody v-for="item in cartItem" :key="item.id">
+            <tbody v-for="item in cartItem" :key="item.id" class="cartContent">
               <tr></tr>
               <tr>
                 <td class="d-flex align-items-center">
-                  <div class="priceMovie">
+                  <div class="movieImg">
                     <img :src="item.image_url" alt="" />
                   </div>
-                  <div class="flex-column px-3">
+                  <div class="flex-column movieName">
                     <h5>{{ item.product_name }}</h5>
-                    <span class="badge badge-warning">{{
+                    <span class="badge badge-warning movieType">{{
                       item.product_type
                     }}</span>
                   </div>
                 </td>
-                <td class="align-middle">{{ item.product_qty }}/部</td>
                 <td class="align-middle text-right">
+                  {{ item.product_qty }}/部
+                </td>
+                <td class="align-middle text-right moviePrice">
                   {{ item.product_total_price | currency }}
                 </td>
                 <td class="align-middle text-right">
@@ -62,7 +64,7 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-10">
+        <div class="col-md-10 col-12">
           <div class="input-group mb-3">
             <input
               type="text"
@@ -88,7 +90,7 @@
     <section class="container mt-5">
       <h2 class="text-white text-center">使用者訂購資訊</h2>
       <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-10 col-sm-12">
           <form class="text-white">
             <div class="form-group">
               <label for="userEmail">Email : </label>
@@ -123,10 +125,7 @@
               ></textarea>
             </div>
             <div class="text-right">
-              <button
-                class="btn btn-outline-danger orderBtn"
-                @click="checkPay()"
-              >
+              <button class="btn btn-success orderBtn" @click="checkPay()">
                 送出訂單
               </button>
             </div>
@@ -238,9 +237,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.priceMovie {
+.movieCart {
+  font-weight: 500;
+  font-size: 24px;
+  @media (max-width: 375px) {
+    font-size: 16px;
+  }
+  .cartContent {
+    font-size: 20px;
+    @media (max-width: 375px) {
+      font-size: 16px;
+    }
+  }
+  .movieName {
+    padding-left: 10px;
+    @media (max-width: 375px) {
+      padding-left: 0;
+      h5 {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.movieImg {
   img {
     height: 150px;
+    @media (max-width: 375px) {
+      display: none;
+    }
+  }
+}
+
+.movieType {
+  @media (max-width: 375px) {
+    display: none;
   }
 }
 
