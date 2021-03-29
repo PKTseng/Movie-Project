@@ -37,11 +37,11 @@
               </div>
             </div>
             <div class="mobileBtn d-flex justify-content-end mt-3">
-              <button class="btn btn-outline-light mr-3 p-2">
-                <i class="far fa-heart"></i>
-                <span class="px-1">加到我的最愛</span>
-              </button>
-              <button class="btn btn-outline-light mr-3 p-2">
+              <button
+                class="btn btn-outline-light mr-3 p-2"
+                @click="addCart(movieInfo.id)"
+              >
+                <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
                 <i class="fas fa-cart-arrow-down"></i>
                 <span class="px-1">加入購物車</span>
               </button>
@@ -74,12 +74,40 @@ export default {
         score: this.$route.params.score,
         time: this.$route.params.time,
       },
+      status: {
+        addLoading: false,
+        favoriteLoading: false,
+      },
     }
   },
   components: {
     Navbar,
     Footer,
     Cart,
+  },
+  methods: {
+    addCart(id, qty = 1) {
+      this.status.addLoading = true
+      const addCartApi = `${process.env.USERAPI}/api/v1/cart`
+      fetch(addCartApi, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+          product_qty: qty,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          this.status.addLoading = false
+        })
+    },
   },
 }
 </script>
