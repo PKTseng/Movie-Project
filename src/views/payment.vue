@@ -14,7 +14,11 @@
               <th class="align-middle text-right">售價</th>
               <th></th>
             </thead>
-            <tbody v-for="item in cartItem" :key="item.id" class="cartContent">
+            <tbody
+              v-for="item in cartItem.data"
+              :key="item.id"
+              class="cartContent"
+            >
               <tr></tr>
               <tr>
                 <td class="d-flex align-items-center">
@@ -48,17 +52,19 @@
               <tr>
                 <td></td>
                 <td class="text-right">總金額</td>
-                <td class="text-right">{{ totalPrice | currency }}</td>
-                <td></td>
-              </tr>
-              <!-- <tr v-if="item.product_total_price !== item.product_total_price">
-                <td></td>
-                <td class="text-right text-success">折扣價</td>
-                <td class="text-right text-success">
-                  {{ item.product_total_price | currency }}
+                <td class="text-right">
+                  {{ cartItem.total_price | currency }}
                 </td>
                 <td></td>
-              </tr> -->
+              </tr>
+              <tr v-if="coupon">
+                <td></td>
+                <td class="text-right text-success">已套用優惠碼</td>
+                <td class="text-right text-success">
+                  {{ cartItem.final_price | currency }}
+                </td>
+                <td></td>
+              </tr>
             </tfoot>
           </table>
         </div>
@@ -70,13 +76,14 @@
               type="text"
               class="form-control"
               placeholder="請輸入優惠碼"
+              v-model="couponCode"
             />
             <div class="input-group-append">
               <button
                 class="btn btn-outline-danger"
                 type="button"
                 id="button-addon2"
-                @click="addCouponCode"
+                @click="addCouponCode(couponCode)"
               >
                 套用優惠碼
               </button>
@@ -144,9 +151,15 @@ export default {
   name: 'Checkout',
   data() {
     return {
+      couponCode: '',
       isLoading: false,
-      cartItem: [],
-      totalPrice: '',
+      cartItem: {
+        data: [],
+        discount_price: '', //打折金額
+        final_price: '', //打折後扣掉的金額
+        totalPrice: '', //尚未打折金額
+      },
+      coupon: false,
     }
   },
   components: {
@@ -164,8 +177,8 @@ export default {
         })
         .then(response => {
           console.log(response)
-          // console.log(response.total_price)
-          this.cartItem = response.data
+          // console.log(response.data)
+          this.cartItem = response
           this.totalPrice = response.total_price
           this.isLoading = false
         })
@@ -188,8 +201,42 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
+          // console.log(response)
           this.getCartInfo()
+        })
+    },
+    //套用優惠券
+    addCouponCode(code) {
+      const couponApi = `${process.env.USERAPI}/api/v1/coupon`
+      fetch(couponApi, {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          coupon_code: code,
+          enabled: true,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          if (code === 'test') {
+            if (code === this.couponCode) {
+              this.coupon = response.enabled
+              console.log('輸入正確')
+            } else {
+              this.coupon = false
+              console.log('第二層判斷，確認 code 跟 couponCod 沒有一致')
+            }
+          } else {
+            this.coupon = false
+            console.log('第一層判斷，確認 code 錯誤')
+          }
+          console.log(response)
+          // this.coupon = response.enabled
         })
     },
     //確認付款
@@ -214,19 +261,6 @@ export default {
         .then(response => {
           console.log(response)
           this.getCartInfo()
-        })
-    },
-    //套用優惠券
-    addCouponCode() {
-      const couponApi = `${process.env.USERAPI}/api/v1/coupon/test`
-      fetch(couponApi)
-        .then(response => {
-          return response.json()
-        })
-        .then(response => {
-          console.log(response)
-          if (response) {
-          }
         })
     },
   },
