@@ -9,9 +9,23 @@
         <div class="col-lg-4 col-md-6 mb-4" v-for="item in products">
           <div class="card h-100 border-0 bg-dark text-light cardTitle">
             <div class="type">{{ item.product_type }}</div>
-            <div class="thumbnail">
-              <img :src="item.image_url" class="card-img-top" alt="..." />
-            </div>
+            <router-link
+              :to="{
+                name: 'MovieInfo',
+                params: {
+                  id: item.product_id,
+                  img: item.image_url,
+                  name: item.product_name,
+                  type: item.product_type,
+                  description: item.description,
+                  price: item.price,
+                  score: item.movie_score,
+                  time: item.movie_runtime,
+                },
+              }"
+              class="thumbnail"
+              ><img :src="item.image_url" class="card-img-top" alt="..."
+            /></router-link>
             <div
               class="card-body d-flex justify-content-between align-items-center"
             >
@@ -89,6 +103,10 @@ export default {
           console.log(response)
           this.getFavorite()
         })
+    },
+    movieInfo() {
+      const path = '/movieInfo/:id'
+      this.$router.push(path)
     },
   },
   mounted() {
