@@ -1,54 +1,47 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
+    <Navbar />
     <section class="container mt-5">
-      <h1 class="text-center text-white my-4">購物清單</h1>
+      <h1 class="text-center text-white my-4">付款完成!</h1>
       <div class="row justify-content-center">
         <div class="col-10">
           <table class="table text-white">
             <thead>
-              <th class="align-middle">電影名稱</th>
-              <th class="align-middle">數量</th>
-              <th class="align-middle">售價</th>
-              <th class="align-middle"></th>
+              <th class="align-middle text-center orderTitle">訂購日期</th>
+              <th class="align-middle text-center orderTitle">產品 id</th>
+              <th class="align-middle orderTitle">訂單價格</th>
+              <th></th>
             </thead>
             <tbody v-for="item in orderList.data" :key="item.id">
               <tr></tr>
               <tr>
                 <td class="d-flex align-items-center">
-                  <div class="priceMovie">
-                    <img :src="item.image_url" alt="" />
-                  </div>
                   <div class="flex-column px-3">
-                    <h5>{{ item.product_name }}</h5>
+                    <p>{{ item.order_date }}</p>
                     <span class="badge badge-warning">{{
                       item.product_type
                     }}</span>
                   </div>
                 </td>
-                <td class="align-middle">{{ item.product_qty }}/部</td>
-                <td class="align-middle text-right">
-                  {{ item.product_total_price | currency }}
+                <td class="align-middle">{{ item.order_id }}</td>
+                <td class="align-middle text-right orderPrice">
+                  {{ item.total_price | currency }}
                 </td>
                 <td></td>
               </tr>
             </tbody>
-            <!-- <tfoot>
-              <tr>
-                <td></td>
-                <td class="text-right">總金額</td>
-                <td class="text-right">{{ totalPrice | currency }}</td>
-                <td></td>
-              </tr>
-            </tfoot> -->
           </table>
         </div>
       </div>
     </section>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 export default {
   name: 'payInfo',
   data() {
@@ -60,6 +53,10 @@ export default {
         current_count: '',
       },
     }
+  },
+  components: {
+    Navbar,
+    Footer,
   },
   methods: {
     getOrder() {
@@ -83,18 +80,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.priceMovie {
-  img {
-    height: 150px;
-  }
-}
-
-label {
-  font-size: 24px;
+.orderTitle {
   font-weight: 600;
-  margin-top: 20px;
+  font-size: 24px;
 }
-.orderBtn {
-  margin-bottom: 200px;
+.orderPrice {
+  font-size: 20px;
 }
 </style>
