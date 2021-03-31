@@ -23,17 +23,30 @@
       <h4 class="m-0 movieName">{{ item.product_name }}</h4>
     </div>
     <div class="px-2 flex-column d-flex border-white mobileBtn">
+      <!-- 用 class 動態綁 fas、far 狀態 -->
       <button
-        class="btn btn-outline-light mb-2 px-2"
+        v-if="!favoriteShow"
+        class="btn btn-outline-danger mb-2 px-2"
         @click="addFavorite(item.product_id)"
+        :class="{ active: favoriteShow }"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
-        <i class="fas fa-heart px-2"></i>
+        <i class="far fa-heart px-2"></i>
         <span>加入我的最愛</span>
+      </button>
+      <button
+        v-else
+        class="btn btn-outline-danger mb-2 px-2"
+        @click="removeFavorite(item.product_id)"
+        :class="{ active: favoriteShow }"
+      >
+        <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
+        <i class="far fa-heart px-2"></i>
+        <span>從我的最愛中移除</span>
       </button>
 
       <button
-        class="btn btn-outline-danger mb-2"
+        class="btn btn-outline-success mb-2"
         @click="addCart(item.product_id)"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
@@ -49,6 +62,7 @@ export default {
   name: 'MovieCard',
   data() {
     return {
+      favoriteShow: false,
       status: {
         addLoading: false,
         favoriteLoading: false,
@@ -99,7 +113,29 @@ export default {
         })
         .then(response => {
           console.log(response)
+          this.favoriteShow = true
           this.status.favoriteLoading = false
+        })
+    },
+    removeFavorite(id) {
+      this.isLoading = true
+      const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(removeFavorite, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          this.favoriteShow = false
         })
     },
   },
