@@ -31,7 +31,7 @@
                       item.product_type
                     }}</span>
                     <span class="text-success couponText" v-if="coupon"
-                      >已套用優惠券</span
+                      >已套用優惠券{{}}</span
                     >
                   </div>
                 </td>
@@ -230,7 +230,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          if (code === 'test') {
+          if (code === 'test_code') {
             if (code === this.couponCode) {
               this.coupon = response.enabled
             } else {
