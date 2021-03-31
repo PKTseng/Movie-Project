@@ -10,7 +10,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './assets/SCSS/all.scss';
 html {
   height: 100%;
 }
@@ -18,10 +19,10 @@ html {
 body {
   position: relative;
   box-sizing: border-box;
-  background: #000;
+  background-color: #121212 !important;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  color: #000;
+  color: #000000;
   margin: 0;
   padding: 0;
   min-height: 100%;
