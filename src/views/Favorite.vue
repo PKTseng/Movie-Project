@@ -31,18 +31,13 @@
             >
               <h4 class="m-0 movieName">{{ item.product_name }}</h4>
             </div>
-            <div
-              class="px-2 d-flex flex-column border-white"
-              @click="removeFavorite(item.product_id)"
-            >
-              <button class="btn btn-outline-light btn-sm mb-2 py-2">
-                <i class="fas fa-heart px-2"></i>
+            <div class="px-2 d-flex flex-column border-white">
+              <button
+                class="btn btn-outline-danger btn-sm mb-2 py-2"
+                @click="removeFavorite(item.product_id)"
+              >
+                <i class="far fa-heart px-2"></i>
                 從我的最愛移除
-              </button>
-
-              <button class="btn btn-outline-danger btn-sm mb-2 py-2">
-                <i class="fas fa-cart-plus px-2"></i>
-                我要購買
               </button>
             </div>
           </div>
