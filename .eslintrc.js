@@ -1,5 +1,3 @@
-/* eslint-disable semi */
-/* eslint-disable prettier/prettier */
 module.exports = {
   extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],
   parserOptions: {
@@ -10,8 +8,7 @@ module.exports = {
     node: true,
   },
   rules: {
-    // eslint-disable-next-line prettier/prettier
-    semi: ['error', 'off'],
+    semi: ['error', 'always'],
     quotes: ['error', 'single'],
     'no-console': ['warn'],
   },
