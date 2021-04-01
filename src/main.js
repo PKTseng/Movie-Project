@@ -14,8 +14,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 
 import 'swiper/css/swiper.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-
-Vue.use(VueAxios, axios, VueAwesomeSwiper)
+import Vuex from 'vuex'
+Vue.use(VueAxios, axios, VueAwesomeSwiper, Vuex)
 
 Vue.component('Loading', Loading) // loading 全域啟用
 
