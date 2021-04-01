@@ -31,7 +31,7 @@
                       item.product_type
                     }}</span>
                     <span class="text-success couponText" v-if="coupon"
-                      >已套用優惠券{{}}</span
+                      >已套用優惠券</span
                     >
                   </div>
                 </td>
@@ -62,7 +62,15 @@
               </tr>
               <tr v-if="coupon">
                 <td></td>
-                <td class="text-right text-success coupon">使用優惠碼</td>
+                <td class="text-right text-danger coupon">優惠折扣金額</td>
+                <td class="text-right text-danger">
+                  - {{ cartItem.discount_price | currency }}
+                </td>
+                <td></td>
+              </tr>
+              <tr v-if="coupon">
+                <td></td>
+                <td class="text-right text-success coupon">套用優惠碼總金額</td>
                 <td class="text-right text-success">
                   {{ cartItem.final_price | currency }}
                 </td>
@@ -85,7 +93,7 @@
             <input
               type="text"
               class="form-control"
-              placeholder="請輸入優惠碼"
+              placeholder="請輸入 test_code"
               v-model="couponCode"
             />
             <div class="input-group-append">
@@ -183,7 +191,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          // console.log(response)
+          console.log(response)
           // console.log(response.data)
           this.cartItem = response
           this.totalPrice = response.total_price
