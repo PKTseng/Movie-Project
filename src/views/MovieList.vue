@@ -1,12 +1,13 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
+    <!-- <loading :active.sync="isLoading"></loading> -->
     <div class="container mt-5">
       <div class="row">
         <!-- 左邊選擇電影類型 -->
         <div class="col-12 col-lg-3">
           <div class="list-group sticky-top listMenu">
             <a
+              href="#"
               class="list-group-item list-group-item-action active list-group-item-dark"
             >
               <span class="menuText">全部顯示</span>
@@ -86,7 +87,6 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
       products: [],
       categoryWithCount: {},
       categories: [],
@@ -96,18 +96,18 @@ export default {
   },
   methods: {
     getProducts() {
-      this.isLoading = true
+      this.$store.state.isLoading = true
       fetch(`${process.env.USERAPI}/api/v1/product`)
         .then(response => {
           return response.json()
         })
         .then(response => {
-          // console.log(response)
+          console.log(response.data)
           this.products = response.data
           this.renderProduct = response.data
           this.getCategories()
           this.getCategoryWithCount()
-          this.isLoading = false
+          this.$store.state.isLoading = false
         })
     },
     getCategories() {
@@ -145,6 +145,11 @@ export default {
       this.renderProduct = this.products.filter(
         item => category === item.product_type
       )
+    },
+  },
+  compted: {
+    isLoading() {
+      return this.$store.state.isLoading
     },
   },
   // 文字過濾塞選功能
