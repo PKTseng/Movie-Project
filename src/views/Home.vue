@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <Navbar />
     <MovieBanner />
     <!-- 下半部所有電影內容 -->
@@ -18,12 +17,7 @@ import Cart from '@/components/Cart'
 import MovieList from '@/views/MovieList'
 
 export default {
-  name: 'index',
-  data() {
-    return {
-      isLoading: false,
-    }
-  },
+  name: 'Home',
   components: {
     Navbar,
     Footer,
