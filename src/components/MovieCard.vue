@@ -118,7 +118,7 @@ export default {
         })
     },
     removeFavorite(id) {
-      this.isLoading = true
+      this.status.favoriteLoading = true
       const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
       fetch(removeFavorite, {
         method: 'DELETE',
@@ -136,6 +136,7 @@ export default {
         .then(response => {
           console.log(response)
           this.favoriteShow = false
+          this.status.favoriteLoading = false
         })
     },
   },
