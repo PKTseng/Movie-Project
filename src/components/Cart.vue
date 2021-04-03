@@ -102,13 +102,13 @@ export default {
   name: 'Cart',
   data() {
     return {
-      isLoading: false,
       totalPrice: '',
       carts: [],
     }
   },
   methods: {
     showCart() {
+      this.$store.state.isLoading = true
       const addCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(addCartApi)
         .then(response => {
@@ -117,12 +117,15 @@ export default {
         .then(response => {
           // console.log(response)
           this.carts = response.data
+          if (this.carts.length === 0) {
+            $('#cartModal').modal('hide')
+          }
           this.totalPrice = response.total_price
-          this.isLoading = false
+          this.$store.state.isLoading = false
         })
     },
     deleteCart(id) {
-      this.isLoading = true
+      this.$store.state.isLoading = true
       const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(deleteCartApi, {
         method: 'DELETE',
@@ -138,7 +141,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
+          // console.log(response)
           this.showCart()
         })
     },
@@ -146,6 +149,11 @@ export default {
       $('#cartModal').modal('hide')
       const path = '/payment'
       this.$router.push(path)
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading
     },
   },
   mounted() {
