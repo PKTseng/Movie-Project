@@ -42,11 +42,6 @@
 <script>
 export default {
   name: 'Navbar',
-  data() {
-    return {
-      message: 'Hello World',
-    }
-  },
 }
 </script>
 
