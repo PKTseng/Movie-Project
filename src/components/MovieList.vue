@@ -102,7 +102,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
           this.products = response.data
           this.renderProduct = response.data
           this.getCategories()
