@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import store from './store'
+// import store from './store'
 import VueAxios from 'vue-axios'
 import currencyFilter from './filter/currency'
 window.Vue = Vue
@@ -15,8 +15,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 
 import 'swiper/css/swiper.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import Vuex from 'vuex'
-Vue.use(VueAxios, axios, VueAwesomeSwiper, Vuex)
+Vue.use(VueAxios, axios, VueAwesomeSwiper)
 
 Vue.component('Loading', Loading) // loading 全域啟用
 
@@ -29,6 +28,6 @@ axios.defaults.withCredentials = true
 new Vue({
   el: '#app',
   router,
-  store,
+  // store,
   render: h => h(App),
 })
