@@ -102,13 +102,14 @@ export default {
   name: 'Cart',
   data() {
     return {
+      isLoading: false,
       totalPrice: '',
       carts: [],
     }
   },
   methods: {
     showCart() {
-      this.$store.state.isLoading = true
+      this.isLoading = true
       const addCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(addCartApi)
         .then(response => {
@@ -121,11 +122,11 @@ export default {
             $('#cartModal').modal('hide')
           }
           this.totalPrice = response.total_price
-          this.$store.state.isLoading = false
+          this.isLoading = false
         })
     },
     deleteCart(id) {
-      this.$store.state.isLoading = true
+      this.isLoading = true
       const deleteCartApi = `${process.env.USERAPI}/api/v1/cart`
       fetch(deleteCartApi, {
         method: 'DELETE',
@@ -149,11 +150,6 @@ export default {
       $('#cartModal').modal('hide')
       const path = '/payment'
       this.$router.push(path)
-    },
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading
     },
   },
   mounted() {
