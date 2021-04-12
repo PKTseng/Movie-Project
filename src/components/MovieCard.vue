@@ -25,20 +25,20 @@
     <div class="px-2 flex-column d-flex border-white mobileBtn">
       <!-- 用 class 動態綁 fas、far 狀態 -->
       <button
-        v-if="!text"
+        v-if="!liked"
         class="btn btn-outline-danger mb-2 px-2"
-        @click="addFavorite(item.product_id)"
-        :class="{ active: text }"
+        @click="addFavorite(item)"
+        :class="{ active: false }"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
         <i class="far fa-heart px-2"></i>
         <span>加入我的最愛</span>
       </button>
       <button
-        v-else
+        v-if="liked"
         class="btn btn-outline-danger mb-2 px-2"
-        @click="removeFavorite(item.product_id)"
-        :class="{ active: text }"
+        @click="removeFavorite(item)"
+        :class="{ active: true }"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
         <i class="far fa-heart px-2"></i>
@@ -62,7 +62,7 @@ export default {
   name: 'MovieCard',
   data() {
     return {
-      text: false,
+      liked: false,
       newArray: [],
       status: {
         addLoading: false,
@@ -94,55 +94,58 @@ export default {
         })
         .then(response => {
           console.log(response)
-          // this.showFavorite()
           this.status.addLoading = false
         })
     },
-    addFavorite(id) {
-      this.status.favoriteLoading = true
-      const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
-      fetch(addFavoriteApi, {
-        method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          product_id: id,
-        }),
-      })
-        .then(response => {
-          return response.json()
-        })
-        .then(response => {
-          // console.log(response)
-          this.checkFavorite()
-          // this.favoriteBool()
-          this.status.favoriteLoading = false
-        })
+    addFavorite(item) {
+      console.log('addFavorite')
+      console.log(this.item)
+      // let id = item.id
+      this.liked = true
+      // this.status.favoriteLoading = true
+      // const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      // fetch(addFavoriteApi, {
+      //   method: 'post',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     product_id: id,
+      //   }),
+      // })
+      //   .then(response => {
+      //     return response.json()
+      //   })
+      //   .then(response => {
+      //     console.log(response)
+      //     // this.status.favoriteLoading = false
+      //   })
     },
-    removeFavorite(id) {
-      this.status.favoriteLoading = true
-      const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
-      fetch(removeFavorite, {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          product_id: id,
-        }),
-      })
-        .then(response => {
-          return response.json()
-        })
-        .then(response => {
-          // console.log(response)
-          this.checkFavorite()
-          // this.favoriteBool()
-          this.status.favoriteLoading = false
-        })
+    removeFavorite(item) {
+      console.log('removeFavorite')
+      console.log(this.item)
+      let id = item.id
+      this.liked = false
+      // this.status.favoriteLoading = true
+      // const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
+      // fetch(removeFavorite, {
+      //   method: 'DELETE',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     product_id: id,
+      //   }),
+      // })
+      //   .then(response => {
+      //     return response.json()
+      //   })
+      //   .then(response => {
+      //     console.log(response)
+      //     // this.status.favoriteLoading = false
+      //   })
     },
     checkFavorite() {
       const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
