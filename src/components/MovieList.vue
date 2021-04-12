@@ -68,7 +68,7 @@
                   v-for="item in renderProduct"
                   :key="item.id"
                 >
-                  <MovieCard :item="item" />
+                  <MovieCard :item="item" :liked="item.liked" />
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ export default {
       categories: [],
       renderProduct: [],
       searchText: '',
-      newArray: [],
+      favoriteArray: [],
     }
   },
   methods: {
@@ -107,8 +107,9 @@ export default {
         .then(response => {
           // console.log(response.data)
           this.products = response.data
-          this.renderProduct = response.data
+          // this.renderProduct = response.data
           this.getCategories()
+          this.getFavorite()
           this.getCategoryWithCount()
           this.isLoading = false
         })
@@ -149,19 +150,31 @@ export default {
         item => category === item.product_type
       )
     },
-    checkFavorite() {
+    getFavorite() {
       const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
       fetch(favoriteApi)
         .then(response => {
           return response.json()
         })
         .then(response => {
-          // console.log('new array')
+          // console.log('getFavorite')
           // console.log(response.data)
-          const idArray = response.data
-          const newArray = idArray.map(item => item.product_id)
-          console.log(newArray)
-          this.newArray = newArray
+          this.favoriteArray = response.data
+          // console.log(this.favoriteArray)
+          let productIds = this.favoriteArray.map(item => item.product_id)
+          let arr = []
+          // console.log(arr)
+          for (const item of this.products) {
+            // console.log(item)
+            if (productIds.includes(item.product_id)) {
+              item.liked = true
+            }
+            arr.push(item)
+            // console.log('includes')
+          }
+          console.log(arr)
+          this.renderProduct = arr
+          this.products = arr
         })
     },
     showAllProduct() {

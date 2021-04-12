@@ -72,7 +72,7 @@ export default {
   },
   props: {
     item: Object,
-    // cNewArray: Array,
+    liked: Boolean,
   },
   methods: {
     addCart(id, qty = 1) {
@@ -117,7 +117,6 @@ export default {
         })
         .then(response => {
           console.log(response)
-          // this.checkFavorite()
           // this.status.favoriteLoading = false
         })
     },
@@ -142,16 +141,6 @@ export default {
         .then(response => {
           console.log(response)
           // this.status.favoriteLoading = false
-        })
-    },
-    checkFavorite() {
-      const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
-      fetch(favoriteApi)
-        .then(response => {
-          return response.json()
-        })
-        .then(response => {
-          console.log(response.data)
         })
     },
   },
