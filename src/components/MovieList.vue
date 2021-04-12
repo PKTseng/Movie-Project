@@ -9,6 +9,7 @@
             <a
               href="#"
               class="list-group-item list-group-item-action active list-group-item-dark"
+              @click.prevent="showAllProduct()"
             >
               <span class="menuText">全部顯示</span>
             </a>
@@ -163,10 +164,12 @@ export default {
           this.newArray = newArray
         })
     },
+    showAllProduct() {
+      this.renderProduct = this.products
+    },
   },
   mounted() {
     this.getProducts()
-    // this.checkFavorite()
   },
 }
 </script>
