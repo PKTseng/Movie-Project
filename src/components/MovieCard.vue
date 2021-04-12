@@ -25,10 +25,10 @@
     <div class="px-2 flex-column d-flex border-white mobileBtn">
       <!-- 用 class 動態綁 fas、far 狀態 -->
       <button
-        v-if="!favoriteShow"
+        v-if="!text"
         class="btn btn-outline-danger mb-2 px-2"
         @click="addFavorite(item.product_id)"
-        :class="{ active: favoriteShow }"
+        :class="{ active: text }"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
         <i class="far fa-heart px-2"></i>
@@ -38,7 +38,7 @@
         v-else
         class="btn btn-outline-danger mb-2 px-2"
         @click="removeFavorite(item.product_id)"
-        :class="{ active: favoriteShow }"
+        :class="{ active: text }"
       >
         <i class="fas fa-spinner fa-spin" v-if="status.favoriteLoading"></i>
         <i class="far fa-heart px-2"></i>
@@ -62,7 +62,8 @@ export default {
   name: 'MovieCard',
   data() {
     return {
-      favoriteShow: false,
+      text: false,
+      newArray: [],
       status: {
         addLoading: false,
         favoriteLoading: false,
@@ -70,7 +71,8 @@ export default {
     }
   },
   props: {
-    item: {},
+    item: Object,
+    // cNewArray: Array,
   },
   methods: {
     addCart(id, qty = 1) {
@@ -92,6 +94,7 @@ export default {
         })
         .then(response => {
           console.log(response)
+          // this.showFavorite()
           this.status.addLoading = false
         })
     },
@@ -112,8 +115,9 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
-          this.favoriteShow = true
+          // console.log(response)
+          this.checkFavorite()
+          // this.favoriteBool()
           this.status.favoriteLoading = false
         })
     },
@@ -134,10 +138,33 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
-          this.favoriteShow = false
+          // console.log(response)
+          this.checkFavorite()
+          // this.favoriteBool()
           this.status.favoriteLoading = false
         })
+    },
+    checkFavorite() {
+      const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(favoriteApi)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          // console.log(response.data)
+          const idArray = response.data
+          const newArray = idArray.map(item => item.product_id)
+          // console.log(newArray)
+          this.newArray = newArray
+          this.favoriteBool()
+        })
+    },
+    favoriteBool() {
+      if (this.newArray.indexOf(this.item.product_id)) {
+        return true
+      } else {
+        return false
+      }
     },
   },
 }

@@ -59,13 +59,14 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       products: [],
       movieName: [],
     }
   },
   methods: {
     getFavorite() {
-      this.$store.state.isLoading = true
+      this.isLoading = true
       const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
       fetch(favoriteApi)
         .then(response => {
@@ -74,11 +75,11 @@ export default {
         .then(response => {
           console.log(response)
           this.products = response.data
-          this.$store.state.isLoading = false
+          this.isLoading = false
         })
     },
     removeFavorite(id) {
-      this.$store.state.isLoading = true
+      this.isLoading = true
       const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
       fetch(removeFavorite, {
         method: 'DELETE',
@@ -101,11 +102,6 @@ export default {
     movieInfo() {
       const path = '/movieInfo/:id'
       this.$router.push(path)
-    },
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading
     },
   },
   mounted() {

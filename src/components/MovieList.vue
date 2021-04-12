@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <loading :active.sync="isLoading"></loading> -->
+    <loading :active.sync="isLoading"></loading>
     <div class="container mt-5">
       <div class="row">
         <!-- 左邊選擇電影類型 -->
@@ -87,16 +87,18 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       products: [],
       categoryWithCount: {},
       categories: [],
       renderProduct: [],
       searchText: '',
+      newArray: [],
     }
   },
   methods: {
     getProducts() {
-      this.$store.state.isLoading = true
+      this.isLoading = true
       fetch(`${process.env.USERAPI}/api/v1/product`)
         .then(response => {
           return response.json()
@@ -107,7 +109,7 @@ export default {
           this.renderProduct = response.data
           this.getCategories()
           this.getCategoryWithCount()
-          this.$store.state.isLoading = false
+          this.isLoading = false
         })
     },
     getCategories() {
@@ -146,24 +148,25 @@ export default {
         item => category === item.product_type
       )
     },
-  },
-  compted: {
-    isLoading() {
-      return this.$store.state.isLoading
+    checkFavorite() {
+      const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(favoriteApi)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          // console.log('new array')
+          // console.log(response.data)
+          const idArray = response.data
+          const newArray = idArray.map(item => item.product_id)
+          console.log(newArray)
+          this.newArray = newArray
+        })
     },
   },
-  // 文字過濾塞選功能
-  // compted: {
-  //   renderProductFilter() {
-  //     if (this.searchText) {
-  //       return this.renderProduct.filter(item =>
-  //         item.product_name.includes(this.searchText)
-  //       )
-  //     }
-  //   },
-  // },
   mounted() {
     this.getProducts()
+    // this.checkFavorite()
   },
 }
 </script>

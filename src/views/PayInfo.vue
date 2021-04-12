@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <Navbar />
     <section class="container mt-5">
-      <h1 class="text-center text-white my-4">付款完成!</h1>
+      <h1 class="text-center text-white my-4 text-success">付款完成!</h1>
       <div class="row justify-content-center">
         <div class="col-10">
           <table class="table text-white">

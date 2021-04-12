@@ -216,7 +216,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          // console.log(response)
+          console.log(response)
           this.getCartInfo()
         })
     },
@@ -253,6 +253,7 @@ export default {
     },
     //移除優惠券效果
     removeCoupon() {
+      this.isLoading = true
       const removeCouponApi = `${process.env.USERAPI}/api/v1/coupon`
       fetch(removeCouponApi, {
         method: 'PATCH',

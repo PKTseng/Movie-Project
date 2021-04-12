@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-// import store from './store'
+import store from './store'
 import VueAxios from 'vue-axios'
 import currencyFilter from './filter/currency'
 window.Vue = Vue
@@ -28,6 +28,6 @@ axios.defaults.withCredentials = true
 new Vue({
   el: '#app',
   router,
-  // store,
+  store,
   render: h => h(App),
 })

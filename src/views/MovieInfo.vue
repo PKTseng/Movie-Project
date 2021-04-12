@@ -29,7 +29,7 @@
           <div>
             <div class="d-flex flex-column align-items-end">
               <del class="text-white"
-                ><h5>售價 NT {{ movieInfo.price | currency }}</h5></del
+                ><h5>售價 NT {{ (movieInfo.price + 300) | currency }}</h5></del
               >
               <div class="h3 m-0 ml-auto text-danger">
                 <span>特價 NT</span>

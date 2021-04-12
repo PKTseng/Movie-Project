@@ -14,7 +14,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MovieBanner from '@/components/MovieBanner'
 import Cart from '@/components/Cart'
-import MovieList from '@/views/MovieList'
+import MovieList from '@/components/MovieList'
 
 export default {
   name: 'Home',
