@@ -35,7 +35,7 @@
         <span>加入我的最愛</span>
       </button>
       <button
-        v-if="liked"
+        v-else
         class="btn btn-outline-danger mb-2 px-2"
         @click="removeFavorite(item)"
         :class="{ active: true }"
@@ -98,29 +98,29 @@ export default {
         })
     },
     addFavorite(item) {
-      console.log('addFavorite')
       console.log(this.item)
-      // let id = item.id
+      let id = item.product_id
       this.liked = true
       // this.status.favoriteLoading = true
-      // const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
-      // fetch(addFavoriteApi, {
-      //   method: 'post',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     product_id: id,
-      //   }),
-      // })
-      //   .then(response => {
-      //     return response.json()
-      //   })
-      //   .then(response => {
-      //     console.log(response)
-      //     // this.status.favoriteLoading = false
-      //   })
+      const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(addFavoriteApi, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          // this.checkFavorite()
+          // this.status.favoriteLoading = false
+        })
     },
     removeFavorite(item) {
       console.log('removeFavorite')
@@ -154,20 +154,8 @@ export default {
           return response.json()
         })
         .then(response => {
-          // console.log(response.data)
-          const idArray = response.data
-          const newArray = idArray.map(item => item.product_id)
-          // console.log(newArray)
-          this.newArray = newArray
-          this.favoriteBool()
+          console.log(response.data)
         })
-    },
-    favoriteBool() {
-      if (this.newArray.indexOf(this.item.product_id)) {
-        return true
-      } else {
-        return false
-      }
     },
   },
 }
