@@ -98,7 +98,6 @@ export default {
         })
     },
     addFavorite(item) {
-      console.log(this.item)
       let id = item.product_id
       this.liked = true
       // this.status.favoriteLoading = true
@@ -123,29 +122,27 @@ export default {
         })
     },
     removeFavorite(item) {
-      console.log('removeFavorite')
-      console.log(this.item)
-      let id = item.id
+      let id = item.product_id
       this.liked = false
       // this.status.favoriteLoading = true
-      // const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
-      // fetch(removeFavorite, {
-      //   method: 'DELETE',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     product_id: id,
-      //   }),
-      // })
-      //   .then(response => {
-      //     return response.json()
-      //   })
-      //   .then(response => {
-      //     console.log(response)
-      //     // this.status.favoriteLoading = false
-      //   })
+      const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
+      fetch(removeFavorite, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: id,
+        }),
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response)
+          // this.status.favoriteLoading = false
+        })
     },
     checkFavorite() {
       const favoriteApi = `${process.env.USERAPI}/api/v1/favorite`
