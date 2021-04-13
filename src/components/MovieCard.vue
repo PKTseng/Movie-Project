@@ -85,7 +85,7 @@ export default {
         .then(response => {
           return response.json()
         })
-        .then(response => {
+        .then(() => {
           this.updateCart()
           this.status.addLoading = false
         })
