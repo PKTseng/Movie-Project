@@ -86,7 +86,6 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
           this.updateCart()
           this.status.addLoading = false
         })
@@ -94,7 +93,7 @@ export default {
     addFavorite(item) {
       let id = item.product_id
       this.liked = true
-      // this.status.favoriteLoading = true
+      this.status.favoriteLoading = true
       const addFavoriteApi = `${process.env.USERAPI}/api/v1/favorite`
       fetch(addFavoriteApi, {
         method: 'post',
@@ -110,14 +109,13 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
-          // this.status.favoriteLoading = false
+          this.status.favoriteLoading = false
         })
     },
     removeFavorite(item) {
       let id = item.product_id
       this.liked = false
-      // this.status.favoriteLoading = true
+      this.status.favoriteLoading = true
       const removeFavorite = `${process.env.USERAPI}/api/v1/favorite`
       fetch(removeFavorite, {
         method: 'DELETE',
@@ -133,8 +131,7 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response)
-          // this.status.favoriteLoading = false
+          this.status.favoriteLoading = false
         })
     },
     async updateCart() {
@@ -144,7 +141,6 @@ export default {
           return response.json()
         })
         .then(response => {
-          console.log(response.data)
           let content = response.data
           this.$store.commit('setCarts', content)
         })
