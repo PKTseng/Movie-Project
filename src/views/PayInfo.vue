@@ -3,13 +3,13 @@
     <loading :active.sync="isLoading"></loading>
     <Navbar />
     <section class="container mt-5">
-      <h1 class="text-center text-white my-4 text-success">付款完成!</h1>
+      <h1 class="text-center text-white my-4 text-success">{{ peyEnd }}</h1>
       <div class="row justify-content-center">
         <div class="col-10">
           <table class="table text-white">
             <thead>
               <th class="align-middle text-center orderTitle">訂購日期</th>
-              <th class="align-middle text-center orderTitle">產品 id</th>
+              <th class="align-middle text-center orderTitle">訂單條碼</th>
               <th class="align-middle orderTitle">訂單價格</th>
               <th></th>
             </thead>
@@ -46,6 +46,7 @@ export default {
   name: 'payInfo',
   data() {
     return {
+      peyEnd: '付款完成!',
       isLoading: '',
       orderList: {
         data: [],
