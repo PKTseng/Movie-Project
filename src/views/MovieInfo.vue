@@ -42,7 +42,7 @@
             <div class="mobileBtn d-flex justify-content-end mt-3">
               <button
                 class="btn btn-outline-light mr-3 p-2"
-                @click="addCart(movieInfo.id)"
+                @click="addCart(movieInfo.product_id)"
               >
                 <i class="fas fa-spinner fa-spin" v-if="status.addLoading"></i>
                 <i class="fas fa-cart-arrow-down"></i>
@@ -97,9 +97,20 @@ export default {
         .then(response => {
           return response.json()
         })
-        .then(response => {
-          console.log(response)
+        .then(() => {
+          this.updateCart()
           this.status.addLoading = false
+        })
+    },
+    async updateCart() {
+      const getCartApi = `${process.env.USERAPI}/api/v1/cart`
+      await fetch(getCartApi)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          let content = response.data
+          this.$store.commit('setCarts', content)
         })
     },
     getProducts(product_id) {
@@ -109,14 +120,12 @@ export default {
           return response.json()
         })
         .then(response => {
-          // console.log(response)
           this.movieInfo = response
         })
     },
   },
   mounted() {
     const id = this.$route.params.id
-    console.log(id)
     this.getProducts(id)
   },
 }
