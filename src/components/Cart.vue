@@ -8,12 +8,12 @@
         class="btn btnCart text-white"
         data-toggle="modal"
         data-target="#cartModal"
-        @click="showCart"
+        @click="showCart()"
       >
         <i class="fas fa-cart-arrow-down fa-3x"></i>
-        <span class="badge badge-pill badge-danger" v-if="carts.length">{{
-          carts.length
-        }}</span>
+        <span class="badge badge-pill badge-danger" v-if="tempCarts">
+          {{ tempCarts }}</span
+        >
       </button>
     </div>
 
@@ -107,22 +107,23 @@ export default {
       carts: [],
     }
   },
+  computed: {
+    tempCarts() {
+      return this.$store.state.carts.length
+    },
+  },
   methods: {
-    showCart() {
-      this.isLoading = true
-      const addCartApi = `${process.env.USERAPI}/api/v1/cart`
-      fetch(addCartApi)
+    async getCartList() {
+      const getCartListApi = `${process.env.USERAPI}/api/v1/cart`
+      await fetch(getCartListApi)
         .then(response => {
           return response.json()
         })
         .then(response => {
-          // console.log(response)
           this.carts = response.data
-          if (this.carts.length === 0) {
-            $('#cartModal').modal('hide')
-          }
+          let content = this.carts
+          this.$store.commit('setCarts', content)
           this.totalPrice = response.total_price
-          this.isLoading = false
         })
     },
     deleteCart(id) {
@@ -143,7 +144,8 @@ export default {
         })
         .then(response => {
           // console.log(response)
-          this.showCart()
+          this.getCartList()
+          this.isLoading = false
         })
     },
     goShopping() {
@@ -151,9 +153,17 @@ export default {
       const path = '/payment'
       this.$router.push(path)
     },
+    showCart() {
+      this.isLoading = true
+      this.getCartList()
+      if (this.carts.length === 0) {
+        $('#cartModal').modal('hide')
+      }
+      this.isLoading = false
+    },
   },
   mounted() {
-    this.showCart()
+    this.getCartList()
   },
 }
 </script>

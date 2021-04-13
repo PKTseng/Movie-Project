@@ -94,6 +94,7 @@ export default {
         })
         .then(response => {
           console.log(response)
+          this.updateCart()
           this.status.addLoading = false
         })
     },
@@ -141,6 +142,19 @@ export default {
         .then(response => {
           console.log(response)
           // this.status.favoriteLoading = false
+        })
+    },
+    async updateCart() {
+      const getCartApi = `${process.env.USERAPI}/api/v1/cart`
+      await fetch(getCartApi)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          console.log(response.data)
+          this.carts = response.data
+          let content = this.carts
+          this.$store.commit('setCarts', content)
         })
     },
   },
