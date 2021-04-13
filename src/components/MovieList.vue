@@ -172,7 +172,7 @@ export default {
             arr.push(item)
             // console.log('includes')
           }
-          console.log(arr)
+          // console.log(arr)
           this.renderProduct = arr
           this.products = arr
         })
