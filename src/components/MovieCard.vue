@@ -6,13 +6,6 @@
         name: 'MovieInfo',
         params: {
           id: item.product_id,
-          img: item.image_url,
-          name: item.product_name,
-          type: item.product_type,
-          description: item.description,
-          price: item.price,
-          score: item.movie_score,
-          time: item.movie_runtime,
         },
       }"
       class="thumbnail"
@@ -152,8 +145,7 @@ export default {
         })
         .then(response => {
           console.log(response.data)
-          this.carts = response.data
-          let content = this.carts
+          let content = response.data
           this.$store.commit('setCarts', content)
         })
     },

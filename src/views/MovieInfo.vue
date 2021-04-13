@@ -2,26 +2,29 @@
   <div>
     <Navbar />
     <section class="container mt-5">
-      <div class="row text-white">
+      <div class="row text-white" v-if="movieInfo">
         <div class="col-md-6 d-flex justify-content-center">
-          <img :src="movieInfo.img" alt="" class="movieImg" />
+          <img :src="movieInfo.image_url" alt="" class="movieImg" />
         </div>
         <div class="col-md-6 d-flex flex-column justify-content-lg-between">
           <div class="movieInfo">
             <h2 class="d-flex align-items-center">
-              {{ movieInfo.name }}
+              {{ movieInfo.product_name }}
             </h2>
             <p class="movieText">
               類型 :
-              <span class="movieSpan category">{{ movieInfo.type }}</span>
+              <span class="movieSpan category">{{
+                movieInfo.product_type
+              }}</span>
             </p>
 
             <p class="movieText">
-              評分 : <span class="movieSpan score">{{ movieInfo.score }}</span>
+              評分 :
+              <span class="movieSpan score">{{ movieInfo.movie_score }}</span>
             </p>
             <p class="movieText">
               放映時數 :
-              <span class="movieSpan time">{{ movieInfo.time }}</span>
+              <span class="movieSpan time">{{ movieInfo.movie_runtime }}</span>
             </p>
             <p class="description">{{ movieInfo.description }}</p>
           </div>
@@ -64,16 +67,7 @@ export default {
   name: 'MovieInfo',
   data() {
     return {
-      movieInfo: {
-        id: this.$route.params.id,
-        img: this.$route.params.img,
-        name: this.$route.params.name,
-        type: this.$route.params.type,
-        description: this.$route.params.description,
-        price: this.$route.params.price,
-        score: this.$route.params.score,
-        time: this.$route.params.time,
-      },
+      movieInfo: null,
       status: {
         addLoading: false,
         favoriteLoading: false,
@@ -108,6 +102,22 @@ export default {
           this.status.addLoading = false
         })
     },
+    getProducts(product_id) {
+      const getProductAPI = `${process.env.USERAPI}/api/v1/product/${product_id}`
+      fetch(getProductAPI)
+        .then(response => {
+          return response.json()
+        })
+        .then(response => {
+          // console.log(response)
+          this.movieInfo = response
+        })
+    },
+  },
+  mounted() {
+    const id = this.$route.params.id
+    console.log(id)
+    this.getProducts(id)
   },
 }
 </script>
