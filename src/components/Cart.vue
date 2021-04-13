@@ -141,7 +141,7 @@ export default {
         .then(response => {
           return response.json()
         })
-        .then(response => {
+        .then(() => {
           this.getCartList()
           this.isLoading = false
         })
@@ -150,14 +150,6 @@ export default {
       $('#cartModal').modal('hide')
       const path = '/payment'
       this.$router.push(path)
-    },
-    showCart() {
-      this.isLoading = true
-      // this.getCartList()
-      // if (this.carts.length === 0) {
-      //   $('#cartModal').modal('hide')
-      // }
-      this.isLoading = false
     },
   },
   mounted() {
