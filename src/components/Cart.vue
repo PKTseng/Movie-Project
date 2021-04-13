@@ -103,7 +103,6 @@ export default {
     return {
       isLoading: false,
       totalPrice: '',
-      // carts: [],
     }
   },
   computed: {
@@ -119,7 +118,6 @@ export default {
           return response.json()
         })
         .then(response => {
-          // this.carts = response.data
           let content = response.data
           this.$store.commit('setCarts', content)
           this.totalPrice = response.total_price
