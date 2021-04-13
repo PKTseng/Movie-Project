@@ -8,11 +8,10 @@
         class="btn btnCart text-white"
         data-toggle="modal"
         data-target="#cartModal"
-        @click="showCart()"
       >
         <i class="fas fa-cart-arrow-down fa-3x"></i>
-        <span class="badge badge-pill badge-danger" v-if="tempCarts">
-          {{ tempCarts }}</span
+        <span class="badge badge-pill badge-danger" v-if="carts.length">
+          {{ carts.length }}</span
         >
       </button>
     </div>
@@ -104,12 +103,12 @@ export default {
     return {
       isLoading: false,
       totalPrice: '',
-      carts: [],
+      // carts: [],
     }
   },
   computed: {
-    tempCarts() {
-      return this.$store.state.carts.length
+    carts() {
+      return this.$store.state.carts
     },
   },
   methods: {
@@ -120,8 +119,8 @@ export default {
           return response.json()
         })
         .then(response => {
-          this.carts = response.data
-          let content = this.carts
+          // this.carts = response.data
+          let content = response.data
           this.$store.commit('setCarts', content)
           this.totalPrice = response.total_price
         })
@@ -143,7 +142,6 @@ export default {
           return response.json()
         })
         .then(response => {
-          // console.log(response)
           this.getCartList()
           this.isLoading = false
         })
@@ -155,10 +153,10 @@ export default {
     },
     showCart() {
       this.isLoading = true
-      this.getCartList()
-      if (this.carts.length === 0) {
-        $('#cartModal').modal('hide')
-      }
+      // this.getCartList()
+      // if (this.carts.length === 0) {
+      //   $('#cartModal').modal('hide')
+      // }
       this.isLoading = false
     },
   },
